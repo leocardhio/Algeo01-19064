@@ -12,7 +12,7 @@ khusus untuk SPL dengan n peubah dan n persamaan).
 ekspansi kofaktor).
 
 Anggota:
-Aditya Bimawan (13519064)
-Rhapsodya Piedro Asmorobangun (13519084)
+Aditya Bimawan (13519064);
+Rhapsodya Piedro Asmorobangun (13519084);
 Leo Cardhio Sih Pratama (13519220)
 
