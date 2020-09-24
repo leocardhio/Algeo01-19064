@@ -1,24 +1,58 @@
-public class matriks {
+package com.tubesAlgeo;
+
+import java.util.Scanner;
+
+public class Matriks {
     // Atribut
-    // int [][] Mat = new int[10][10];
+    private float[][] Mat;
+    private int nBrs, nKol;
+    private static final byte idxMin = 0;
 
-    // Method;
-    // matriks() {
-    //     int i, j;
+    //Konstruktor persegi
+    public Matriks(int dimensi) {
+        this.Mat = new float[dimensi][dimensi];
+        this.nBrs = dimensi;
+        this.nKol = dimensi;
 
-    //     for (i=0;i<10;i++) {
-    //         for (j=0;j<10;j++)
-    //             this.Mat[i][j] = 0;
-    //     }
-    // }
+        Scanner scanner = new Scanner(System.in);
 
-    void tulismatriks(int B, int K, float M[][]) {
-        int i, j;
-        for (i=0;i<B;i++) {
-            for (j=0;j<K;j++) {
-                System.out.print(M[i][j]);
-                if (j < B) {
-                    System.out.print(" ");
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol; j++) {
+                System.out.printf("[%d][%d]: ", i, j);
+                this.Mat[i][j] = scanner.nextFloat();
+            }
+        }
+    }
+
+    //Konstruktor non persegi
+    public Matriks(int baris, int kolom) {
+        this.Mat = new float[baris][kolom];
+        this.nBrs = baris;
+        this.nKol = kolom;
+
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol; j++) {
+                System.out.printf("[%d, %d] = ", i, j);
+                this.Mat[i][j] = scanner.nextFloat();
+            }
+        }
+    }
+
+    //Konstruktor terima jadi
+    public Matriks(float[][] tabel) {
+        this.Mat = tabel;
+        this.nBrs = tabel.length;
+        this.nKol = tabel[0].length;
+    }
+
+    public void tulisMatriks() {
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol; j++) {
+                System.out.printf("%.2f", this.Mat[i][j]);
+                if (j < nKol - 1) {
+                    System.out.printf("\t");
                 }
             }
             System.out.println();
@@ -266,5 +300,4 @@ public class matriks {
         }
         return I;
     }
-
 }
