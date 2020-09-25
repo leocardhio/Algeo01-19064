@@ -10,6 +10,8 @@ public class Main {
                                                 {2, 8, 6, -3}});
         M.tulisMatriks();
         System.out.println("determinan: " + M.determinan());
+
+        Regresi reg = new Regresi();
 //        float [][] M3 = {{1, 2, 3},
 //                        {2, 5, 3},
 //                        {1, 0, 8}};

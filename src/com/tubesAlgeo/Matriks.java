@@ -29,6 +29,26 @@ public class Matriks {
         this.nKol = tabel[0].length;
     }
 
+    public float get(int i, int j) {
+        return this.Mat[i][j];
+    }
+
+    public void set(int i, int j, float val) {
+        this.Mat[i][j] = val;
+    }
+
+    public int getnBrs() {
+        return this.nBrs;
+    }
+
+    public int getnKol() {
+        return this.nKol;
+    }
+
+    public int getIdxMin() {
+        return idxMin;
+    }
+
     public void bacaMatriks() {
         Scanner scanner = new Scanner(System.in);
 
@@ -52,13 +72,6 @@ public class Matriks {
         }
     }
 
-    public float get(int i, int j) {
-        return this.Mat[i][j];
-    }
-
-    public void set(int i, int j, float val) {
-        this.Mat[i][j] = val;
-    }
 
     // void transpose(int B, int K, int M[][]) {
     //     int i, j;
