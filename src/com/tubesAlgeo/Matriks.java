@@ -13,15 +13,6 @@ public class Matriks {
         this.Mat = new float[dimensi][dimensi];
         this.nBrs = dimensi;
         this.nKol = dimensi;
-
-        Scanner scanner = new Scanner(System.in);
-
-        for (int i = idxMin; i < nBrs; i++) {
-            for (int j = idxMin; j < nKol; j++) {
-                System.out.printf("[%d][%d]: ", i, j);
-                this.Mat[i][j] = scanner.nextFloat();
-            }
-        }
     }
 
     //Konstruktor non persegi
@@ -29,15 +20,6 @@ public class Matriks {
         this.Mat = new float[baris][kolom];
         this.nBrs = baris;
         this.nKol = kolom;
-
-        Scanner scanner = new Scanner(System.in);
-
-        for (int i = idxMin; i < nBrs; i++) {
-            for (int j = idxMin; j < nKol; j++) {
-                System.out.printf("[%d, %d] = ", i, j);
-                this.Mat[i][j] = scanner.nextFloat();
-            }
-        }
     }
 
     //Konstruktor terima jadi
@@ -45,6 +27,17 @@ public class Matriks {
         this.Mat = tabel;
         this.nBrs = tabel.length;
         this.nKol = tabel[0].length;
+    }
+
+    public void bacaMatriks() {
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol; j++) {
+                System.out.printf("baris %d kolom %d: ", i, j);
+                this.Mat[i][j] = scanner.nextFloat();
+            }
+        }
     }
 
     public void tulisMatriks() {
@@ -59,6 +52,14 @@ public class Matriks {
         }
     }
 
+    public float get(int i, int j) {
+        return this.Mat[i][j];
+    }
+
+    public void set(int i, int j, float val) {
+        this.Mat[i][j] = val;
+    }
+
     // void transpose(int B, int K, int M[][]) {
     //     int i, j;
 
@@ -68,35 +69,35 @@ public class Matriks {
     //     }
     // }
 
-    float determinan(int N, int M[][]) {
-        int i, j, k;
-        float D = 0;
-        if (N!=2) {
-            for (k = 0; k < N; ++k) {
-                int [][] K = new int[N-1][N-1];
-                for ( i = 1; i < N; ++i) {
-                    for (j = 0; j < N; ++j) {
-                        if (k!=j) {
-                            if (j<k) {
-                                K[i-1][j] = M[i][j];
-                            }
-                            else {
-                                K[i-1][j-1] = M[i][j];
-                            }
-                        }
+    public float determinan() {
+        if (this.nBrs != this.nKol) {
+            throw new java.lang.RuntimeException("Matriks tidak persegi.");
+        }
+        else if (this.nBrs == 2) {
+            return (get(0, 0) * get(1, 1) - get(0,1) * get(1, 0));
+        }
+
+        float det = 0;
+
+        for (int n = idxMin; n < nKol; n++) {
+            //Menghitung minor pada baris pertama
+            Matriks minor = new Matriks(nBrs-1, nKol-1);
+
+            for (int i = idxMin+1; i < nBrs; i++) {
+                for (int j = idxMin; j < nKol; j++) {
+                    if (j < n) {
+                        minor.set(i-1, j, get(i, j));
+                    }
+                    else if (j > n) {
+                        minor.set(i-1, j-1, get(i, j));
                     }
                 }
-                if (k%2 == 0) {
-                    D = D + (M[0][k] * determinan(N-1,K));
-                }
-                else {
-                    D = D - (M[0][k] * determinan(N-1,K));
-                }
             }
+            int tanda = (n % 2 == 0) ? 1 : -1;
+            det += tanda * get(idxMin, n) * minor.determinan();
         }
-        else
-            D = (M[0][0] * M[1][1]) - (M[0][1] * M[1][0]);
-        return D;
+
+        return det;
     }
 
     float detred(int N, float M[][]) {
