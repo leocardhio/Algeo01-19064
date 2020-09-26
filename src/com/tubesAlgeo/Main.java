@@ -11,7 +11,12 @@ public class Main {
         M.tulisMatriks();
         System.out.println("determinan: " + M.determinan());
 
-        Regresi reg = new Regresi();
+        Matriks augmented = new Matriks(new float[][] { {0, 3, -1, 5},
+                                                        {0, 0, -3, 3},
+                                                        {-2, 0, -1, 1} });
+        augmented.gaussjor();
+        augmented.tulisMatriks();
+//        Regresi reg = new Regresi();
 //        float [][] M3 = {{1, 2, 3},
 //                        {2, 5, 3},
 //                        {1, 0, 8}};

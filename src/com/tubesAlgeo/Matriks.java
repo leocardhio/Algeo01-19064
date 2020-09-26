@@ -159,17 +159,17 @@ public class Matriks {
         return D*swap;
     }
 
-    float [][] gauss(int B, int K, float M[][]) {
+    public void gauss() {
         int i, j, a, b, skip = 0;
         float div, mul, temp;
         boolean valid = true;
-        for ( i = 0; i < B; ++i) {
-            div = M[i][i+skip];
+        for ( i = 0; i < nBrs; ++i) {
+            div = Mat[i][i+skip];
             if (div == 0) {
                 valid = false;
-                for (j = i; j < K && !valid;) {
-                    for ( a = i; a < B && !valid;) {
-                        if (M[a][j] != 0) {
+                for (j = i; j < nKol && !valid;) {
+                    for ( a = i; a < nBrs && !valid;) {
+                        if (Mat[a][j] != 0) {
                             valid = true;
                         }
                         else {
@@ -177,12 +177,12 @@ public class Matriks {
                         }
                     }
                     if (valid) {
-                        for (; j < K; ++j) {
-                            temp = M[i][j];
-                            M[i][j] = M[a][j];
-                            M[a][j] = temp;
+                        for (; j < nKol; ++j) {
+                            temp = Mat[i][j];
+                            Mat[i][j] = Mat[a][j];
+                            Mat[a][j] = temp;
                         }
-                        div = M[i][i+skip];
+                        div = Mat[i][i+skip];
                     }
                     else {
                         j += 1;
@@ -191,33 +191,32 @@ public class Matriks {
                 }
             }
             if (valid) {
-                if (i + skip < (K - 1)) {
-                    for (j = i + skip; j < K; ++j) {
-                        M[i][j] /= div;
+                if (i + skip < (nKol - 1)) {
+                    for (j = i + skip; j < nKol; ++j) {
+                        Mat[i][j] /= div;
                     }
                 }
-                if (i < (B - 1)) {
-                    for ( a = i + 1; a < B; ++a) {
-                        mul = M[a][i+skip] / M[i][i+skip];
-                        for (b = i + skip; b < K; ++b) {
-                            M[a][b] -= (mul*M[i][b]);
+                if (i < (nBrs - 1)) {
+                    for ( a = i + 1; a < nBrs; ++a) {
+                        mul = Mat[a][i+skip] / Mat[i][i+skip];
+                        for (b = i + skip; b < nKol; ++b) {
+                            Mat[a][b] -= (mul*Mat[i][b]);
                         }
                     }
                 }
             }
         }
-        return M;
     }
 
-    float [][] gaussjor(int B, int K, float M[][]) {
+    public void gaussjor() {
         int i, j, a, b;
         float mul;
         boolean found;
-        gauss(B, K, M);
-        for ( i = 1; i < B; ++i) {
+        gauss();
+        for ( i = 1; i < nBrs; ++i) {
             found = false;
-            for (j = i; j < K && !found;) {
-                if (M[i][j] == 1) {
+            for (j = i; j < nKol && !found;) {
+                if (Mat[i][j] == 1) {
                     found = true;
                 }
                 else {
@@ -226,14 +225,13 @@ public class Matriks {
             }
             if (found) {
                 for ( a = 0; a < i; ++a) {
-                    mul = M[a][j] / M[i][j];
-                    for (b = j; b < K; ++b) {
-                        M[a][b] -= (mul*M[i][b]);
+                    mul = Mat[a][j] / Mat[i][j];
+                    for (b = j; b < nKol; ++b) {
+                        Mat[a][b] -= (mul*Mat[i][b]);
                     }
                 }
             }
         }
-        return M;
     }
 
     float [][] invers(int B, int K, float M[][]) {
