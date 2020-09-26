@@ -17,10 +17,10 @@ public class Regresi {
         do {
             System.out.print("Masukkan n (banyaknya persamaan): ");
             n = scanner.nextInt();
-            if (n <= k) {
-                System.out.println("n harus lebih besar dari k");
+            if (n <= k + 1) {
+                System.out.println("n harus lebih besar dari k + 1");
             }
-        } while (n <= k);
+        } while (n <= k + 1);
 
         makeTabEQ(n, k);
         makeTabNormal(k);
@@ -32,6 +32,10 @@ public class Regresi {
 
         this.tabEQ.tulisMatriks();
         System.out.println();
+        this.tabNormal.tulisMatriks();
+        System.out.println();
+        System.out.println("taksiran:");
+        this.tabNormal.gaussjor();
         this.tabNormal.tulisMatriks();
     }
 

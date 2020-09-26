@@ -8,6 +8,7 @@ public class Matriks {
     private int nBrs, nKol;
     private static final byte idxMin = 0;
 
+    //KONSTRUKTOR
     //Konstruktor persegi
     public Matriks(int dimensi) {
         this.Mat = new float[dimensi][dimensi];
@@ -29,6 +30,7 @@ public class Matriks {
         this.nKol = tabel[0].length;
     }
 
+    //GETTER SETTER
     public float get(int i, int j) {
         return this.Mat[i][j];
     }
@@ -49,6 +51,7 @@ public class Matriks {
         return idxMin;
     }
 
+    //BACA TULIS
     public void bacaMatriks() {
         Scanner scanner = new Scanner(System.in);
 
@@ -72,17 +75,29 @@ public class Matriks {
         }
     }
 
+    //SOAL/TUGAS
+     public Matriks transpose() {
+        Matriks transpose = new Matriks(nKol, nBrs);
 
-    // void transpose(int B, int K, int M[][]) {
-    //     int i, j;
+        for (int j = idxMin; j < nKol; j++) {
+            for (int i = idxMin; i < nBrs; i++) {
+                transpose.set(j, i, this.get(i, j));
+            }
+        }
 
-    //     for (i=0;i<B;i++) {
-    //         for (j=0;j<K;j++)
-    //             M[i][j] = this.Mat[j][i];
-    //     }
-    // }
+        return transpose;
+     }
+
+    public void kaliKonstanta(double c) {
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol; j++) {
+                Mat[i][j] *= c;
+            }
+        }
+    }
 
     public float determinan() {
+        //Menghitung determinan dengan ekspansi kofaktor baris pertama
         if (this.nBrs != this.nKol) {
             throw new java.lang.RuntimeException("Matriks tidak persegi.");
         }
@@ -94,18 +109,8 @@ public class Matriks {
 
         for (int n = idxMin; n < nKol; n++) {
             //Menghitung minor pada baris pertama
-            Matriks minor = new Matriks(nBrs-1, nKol-1);
+            Matriks minor = makeMinor(idxMin, n);
 
-            for (int i = idxMin+1; i < nBrs; i++) {
-                for (int j = idxMin; j < nKol; j++) {
-                    if (j < n) {
-                        minor.set(i-1, j, get(i, j));
-                    }
-                    else if (j > n) {
-                        minor.set(i-1, j-1, get(i, j));
-                    }
-                }
-            }
             int tanda = (n % 2 == 0) ? 1 : -1;
             det += tanda * get(idxMin, n) * minor.determinan();
         }
@@ -234,82 +239,47 @@ public class Matriks {
         }
     }
 
-    float [][] invers(int B, int K, float M[][]) {
-        int i, j, a, b, skip = 0;
-        float div, mul, temp;
-        boolean found, valid = true;
-        float [][] I = new float[B][K];
-        for (i=0;i<B;i++) {
-            I[i][i] = 1;
+    public Matriks invers() {
+        float determinan = this.determinan();
+        if (this.nBrs != this.nKol) {
+            throw new java.lang.RuntimeException("Matriks tidak persegi.");
         }
-        for ( i = 0; i < B; ++i) {
-            div = M[i][i+skip];
-            if (div == 0) {
-                valid = false;
-                for (j = i; j < K && !valid;) {
-                    for ( a = i; a < B && !valid;) {
-                        if (M[a][j] != 0) {
-                            valid = true;
-                        }
-                        else {
-                            a++;
-                        }
-                    }
-                    if (valid) {
-                        for (; j < K; ++j) {
-                            temp = M[i][j];
-                            M[i][j] = M[a][j];
-                            M[a][j] = temp;
-                            temp = I[i][j];
-                            I[i][j] = I[a][j];
-                            I[a][j] = temp;
-                        }
-                        div = M[i][i+skip];
-                    }
-                    else {
-                        j += 1;
-                        skip += 1;
-                    }
-                }
+        else if (determinan == 0) {
+            System.out.println("Matriks ini tidak punya invers, me-return matriks ini.");
+            return this;
+        }
+
+        Matriks cofactor = new Matriks(nBrs);
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol; j++) {
+                Matriks minor = makeMinor(i, j);
+                int tanda = ((i + j) % 2 == 0) ? 1 : -1;
+                float val = minor.determinan() * tanda;
+
+                cofactor.set(i, j, val);
             }
-            if (valid) {
-                if (i + skip < K) {
-                    for (j = i + skip; j < K; ++j) {
-                        M[i][j] /= div;
-                        I[i][j] /= div;
-                    }
-                }
-                if (i < (B - 1)) {
-                    for ( a = i + 1; a < B; ++a) {
-                        mul = M[a][i+skip] / M[i][i+skip];
-                        for (b = i + skip; b < K; ++b) {
-                            M[a][b] -= (mul*M[i][b]);
-                            I[a][b] -= (mul*I[i][b]);
-                        }
-                    }
+        }
+
+        Matriks adjoin = cofactor.transpose();
+        adjoin.kaliKonstanta((1/determinan));
+
+        return adjoin;
+    }
+
+    private Matriks makeMinor(int k, int l) {
+        //membuat minor dari Mat pada indeks kl
+        Matriks minor = new Matriks(this.nBrs-1);
+
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol; j++) {
+                if (i != k && j != l) {
+                    int setI = (i > k) ? i - 1 : i;
+                    int setJ = (j > l) ? j - 1 : j;
+                    minor.set(setI, setJ, get(i, j));
                 }
             }
         }
-        for ( i = 1; i < B; ++i) {
-            found = false;
-            for (j = i; j < K && !found;) {
-                if (M[i][j] == 1) {
-                    found = true;
-                }
-                else {
-                    ++j;
-                }
-            }
-            if (found) {
-                for ( a = 0; a < i; ++a) {
-                    mul = M[a][j] / M[i][j];
-                    for (b = j; b < K; ++b) {
-                        M[a][b] -= (mul*M[i][b]);
-                        I[a][b] -= (mul*I[i][b]);
-                    }
-                }
-            }
-        }
-        return I;
+
+        return minor;
     }
 }
