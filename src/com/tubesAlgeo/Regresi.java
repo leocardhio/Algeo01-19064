@@ -1,5 +1,6 @@
 package com.tubesAlgeo;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Regresi {
@@ -34,9 +35,15 @@ public class Regresi {
         System.out.println();
         this.tabNormal.tulisMatriks();
         System.out.println();
-        System.out.println("taksiran:");
+        System.out.println("tabel B:");
         this.tabNormal.gaussjor();
         this.tabNormal.tulisMatriks();
+        System.out.println("konstanta B:");
+        System.out.println(Arrays.toString(getArrayB()));
+        System.out.println();
+        System.out.println("taksiran:");
+        taksirNilai();
+        this.tabTaksir.tulisMatriks();
     }
 
     private void makeTabEQ(int n, int k) {
@@ -60,12 +67,17 @@ public class Regresi {
 
     private void makeTabTaksir(int nTaksir, int k) {
         Scanner scanner = new Scanner(System.in);
-        this.tabTaksir = new Matriks(nTaksir, k);
+        this.tabTaksir = new Matriks(nTaksir, k + 1);
 
         for (int i = this.tabTaksir.getIdxMin(); i < this.tabTaksir.getnBrs(); i++) {
             for (int j = this.tabTaksir.getIdxMin(); j < this.tabTaksir.getnKol(); j++) {
-                System.out.printf("x[%d][%d]: ", i+1, j+1);
-                this.tabTaksir.set(i, j, scanner.nextFloat());
+                if (j == this.tabTaksir.getnKol() - 1) {
+                    this.tabTaksir.set(i, j, 0);
+                }
+                else {
+                    System.out.printf("x[%d][%d]: ", i + 1, j + 1);
+                    this.tabTaksir.set(i, j, scanner.nextFloat());
+                }
             }
         }
     }
@@ -85,6 +97,30 @@ public class Regresi {
                     this.tabNormal.set(i, j, temp);
                 }
             }
+        }
+    }
+
+    private float[] getArrayB() {
+        float[] arrayB = new float[tabNormal.getnBrs()];
+
+        for (int i = tabNormal.getIdxMin(); i < tabNormal.getnBrs(); i++) {
+            arrayB[i] = tabNormal.get(i, tabNormal.getnKol() - 1);
+        }
+
+        return arrayB;
+    }
+
+    private void taksirNilai() {
+        float[] arrayB = getArrayB();
+        int jVal = tabTaksir.getnKol() - 1;
+
+        for (int i = tabTaksir.getIdxMin(); i < tabTaksir.getnBrs(); i++) {
+            float taksiran = arrayB[0];
+            for (int j = tabTaksir.getIdxMin(); j < jVal; j++) {
+                taksiran += (arrayB[j + 1] * tabTaksir.get(i, j));
+            }
+
+            tabTaksir.set(i, jVal, taksiran);
         }
     }
 }

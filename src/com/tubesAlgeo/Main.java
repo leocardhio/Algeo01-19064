@@ -19,7 +19,7 @@ public class Main {
 //                                                        {-2, 0, -1, 1} });
 //        augmented.gaussjor();
 //        augmented.tulisMatriks();
-//        Regresi reg = new Regresi();
+        Regresi reg = new Regresi();
 //        float [][] M3 = {{1, 2, 3},
 //                        {2, 5, 3},
 //                        {1, 0, 8}};
