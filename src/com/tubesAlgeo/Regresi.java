@@ -31,19 +31,19 @@ public class Regresi {
 
         makeTabTaksir(nTaksir, k);
 
-        this.tabEQ.tulisMatriks();
+        System.out.println(tabEQ);;
         System.out.println();
-        this.tabNormal.tulisMatriks();
+        System.out.println(tabNormal);;
         System.out.println();
         System.out.println("tabel B:");
         this.tabNormal.gaussjor();
-        this.tabNormal.tulisMatriks();
+        System.out.println(tabNormal);;
         System.out.println("konstanta B:");
         System.out.println(Arrays.toString(getArrayB()));
         System.out.println();
         System.out.println("taksiran:");
         taksirNilai();
-        this.tabTaksir.tulisMatriks();
+        System.out.println(tabTaksir);;
     }
 
     private void makeTabEQ(int n, int k) {

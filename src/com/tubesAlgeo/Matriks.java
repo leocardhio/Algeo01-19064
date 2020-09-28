@@ -65,17 +65,22 @@ public class Matriks {
         }
     }
 
-    public void tulisMatriks() {
-        //tulis matriks di command line
+    public String toString() {
+        //me-return matriks dalam bentuk string, dibikin tostring bukannya
+        //tulisMatriks() biar gampang output ke file
+        StringBuilder matStr = new StringBuilder();
+        //stringBuilder() soalnya concat jelek performa nya kalo di loop
         for (int i = idxMin; i < nBrs; i++) {
             for (int j = idxMin; j < nKol; j++) {
-                System.out.printf("%.2f", this.Mat[i][j]);
+                matStr.append(String.format("%.2f", this.Mat[i][j]));
                 if (j < nKol - 1) {
-                    System.out.printf("\t");
+                    matStr.append("\t");
                 }
             }
-            System.out.println();
+            matStr.append("\n");
         }
+
+        return matStr.toString();
     }
 
     //SOAL/TUGAS
