@@ -47,6 +47,8 @@ public class Regresi {
     }
 
     private void makeTabEQ(int n, int k) {
+        //membuat tabel persamaan yang didapat dari input keyboard,
+        //tiap baris isinya x1 x2 ... xn y
         Scanner scanner = new Scanner(System.in);
         this.tabEQ = new Matriks(n, k + 1);
 
@@ -66,6 +68,9 @@ public class Regresi {
     }
 
     private void makeTabTaksir(int nTaksir, int k) {
+        //Membuat tabel yang tiap barisnya x1, x2,...,xn untuk persamaan yang ingin
+        //ditaksir, kolom terakhir berisi nilai taksirannya, awalnya 0, untuk mengisi
+        //taksirannya run taksirNilai()
         Scanner scanner = new Scanner(System.in);
         this.tabTaksir = new Matriks(nTaksir, k + 1);
 
@@ -83,6 +88,8 @@ public class Regresi {
     }
 
     private void makeTabNormal(int l) {
+        //Menghasilkan matriks Normal Equation utk regresi berganda, lebih detailnya
+        //bisa diliat di spek tubes
         this.tabNormal = new Matriks(l + 1, l + 2);
 
         for (int i = this.tabNormal.getIdxMin(); i < this.tabNormal.getnBrs(); i++) {
@@ -101,6 +108,9 @@ public class Regresi {
     }
 
     private float[] getArrayB() {
+        //Mereturn array berisi konstanta Bn, n adalah indeks di array.
+        //array didapat dari hasil gaussjordan tabnormal, sebelum run getArrayB()
+        //harus tabNormal.gaussjor()
         float[] arrayB = new float[tabNormal.getnBrs()];
 
         for (int i = tabNormal.getIdxMin(); i < tabNormal.getnBrs(); i++) {
@@ -111,6 +121,7 @@ public class Regresi {
     }
 
     private void taksirNilai() {
+        //menghasilkan taksiran, y = B0 + B1x1+ B2x2 + ... + Bn+1xn
         float[] arrayB = getArrayB();
         int jVal = tabTaksir.getnKol() - 1;
 

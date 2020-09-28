@@ -31,10 +31,12 @@ public class Matriks {
     }
 
     //GETTER SETTER
+    //get elemen baris i kolom j
     public float get(int i, int j) {
         return this.Mat[i][j];
     }
 
+    //set elemen baris i kolom j
     public void set(int i, int j, float val) {
         this.Mat[i][j] = val;
     }
@@ -64,6 +66,7 @@ public class Matriks {
     }
 
     public void tulisMatriks() {
+        //tulis matriks di command line
         for (int i = idxMin; i < nBrs; i++) {
             for (int j = idxMin; j < nKol; j++) {
                 System.out.printf("%.2f", this.Mat[i][j]);
@@ -77,6 +80,7 @@ public class Matriks {
 
     //SOAL/TUGAS
      public Matriks transpose() {
+        //Me-return new Matriks dengan Mat berupa transpose dari this.Mat
         Matriks transpose = new Matriks(nKol, nBrs);
 
         for (int j = idxMin; j < nKol; j++) {
@@ -89,6 +93,7 @@ public class Matriks {
      }
 
     public void kaliKonstanta(double c) {
+        //mengalikan semua elemen this.Mat dengan c
         for (int i = idxMin; i < nBrs; i++) {
             for (int j = idxMin; j < nKol; j++) {
                 Mat[i][j] *= c;
@@ -165,6 +170,8 @@ public class Matriks {
     }
 
     public void gauss() {
+        //TODO jadiin me-return new Matriks mirip kayak invers(), coba testcase
+        //dari spek tubes (kalo belom)
         int i, j, a, b, skip = 0;
         float div, mul, temp;
         boolean valid = true;
@@ -214,6 +221,9 @@ public class Matriks {
     }
 
     public void gaussjor() {
+        //Mengubah this.Mat jadi eselon tereduksi
+        //TODO jadiin me-return new Matriks mirip kayak invers(), coba testcase
+        //dari spek tubes (kalo belom)
         int i, j, a, b;
         float mul;
         boolean found;
@@ -240,6 +250,8 @@ public class Matriks {
     }
 
     public Matriks invers() {
+        //Me return new Matriks yang Mat nya invers dari this.Mat
+        //invers didapat dengan cara adjoin
         float determinan = this.determinan();
         if (this.nBrs != this.nKol) {
             throw new java.lang.RuntimeException("Matriks tidak persegi.");
