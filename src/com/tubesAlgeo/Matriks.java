@@ -1,5 +1,9 @@
-package com.tubesAlgeo;
-
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Matriks {
@@ -28,6 +32,52 @@ public class Matriks {
         this.Mat = tabel;
         this.nBrs = tabel.length;
         this.nKol = tabel[0].length;
+    }
+
+    public Matriks(){
+        String filename;
+        boolean isValid;
+        Scanner scanner= new Scanner(System.in);
+        
+        do{
+            isValid=true;
+            try {
+                System.out.print("Baca file (tanpa ext.): ");
+                filename=scanner.nextLine();
+                Scanner sf = new Scanner(new File("./"+filename+".txt"));
+
+                while(sf.hasNextLine()){
+                    this.nBrs++;
+                    sf.nextLine();
+                }
+                sf.close();
+
+                sf = new Scanner(new File("./"+filename+".txt"));
+                while(sf.hasNextFloat()){
+                    this.nKol++;
+                    sf.nextFloat();
+                }
+                this.nKol/=this.nBrs;
+                System.out.printf("%d %d",this.nBrs,this.nKol);
+                sf.close();
+
+
+                this.Mat=new float[this.nBrs][this.nKol];
+                sf = new Scanner(new File("./"+filename+".txt"));
+                for (int i=0;i<this.nBrs;i++){
+                    for (int j=0;j<this.nKol;j++){
+                        
+                        if(sf.hasNextFloat()){
+                            set(i, j, sf.nextFloat());
+                            System.out.println("tes");
+                        }
+                    }
+                }
+            } catch (FileNotFoundException err){
+                System.out.println("File not found, coba lagi");
+                isValid=false;
+            }
+        } while (!isValid);
     }
 
     //GETTER SETTER
@@ -299,4 +349,42 @@ public class Matriks {
 
         return minor;
     }
+
+
+//  UNDER CONSTRUCTION - LEO
+    public float SPLCramer(){
+        Matriks Mtemp;
+        float detMtemp, detM;
+
+        detM=determinan();
+    }
+
+
+    public void MakeFile(){
+        String filename;
+        boolean isFail;
+        Scanner scanner= new Scanner(System.in);
+
+        do {
+            isFail=false;
+            
+            System.out.print("Masukkan nama file (tanpa ext.): ");  
+            filename=scanner.nextLine();  
+
+            File nf=new File("./",filename+".txt");
+            if(!nf.exists() && !nf.isDirectory()){
+                try{
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(filename+".txt"));
+                    writer.write(this.toString());
+                    writer.flush();
+                    System.out.println("File sukses dibuat");
+                } catch (IOException err){};
+            } else {
+                System.out.println("Nama file sudah diambil, coba dengan nama yang lain");
+                isFail=true;
+            }
+        } while (isFail);
+    }
+
+    
 }
