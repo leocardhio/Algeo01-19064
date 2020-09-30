@@ -7,6 +7,7 @@ public class Main {
         Matriks M = new Matriks(new float[][] { {3, 5, 6},
                                                 {7 ,4, 8},
                                                 {6, 5, 1}});
+
         Matriks augmented = new Matriks(new float[][] { {0, 3, -1, 5},
                                                         {0, 0, -3, 3},
                                                         {0, 0, -12, 1} });
@@ -16,16 +17,16 @@ public class Main {
         System.out.println(augmented2.MatKoef);
         System.out.println(augmented2.MatVal);
         Matriks Mgauss = augmented.gaussjor();
-        System.out.println(Mgauss);
-        System.out.println(M);
-        System.out.println("determinan: " + M.determinan());
+        //System.out.println(Mgauss);
+        //System.out.println(M);
+        //System.out.println("determinan: " + M.determinan());
 
         // Matriks augmented = new Matriks();
         // augmented.MakeFile();
         // augmented.gauss();
         // System.out.println(augmented);
         
-        // Interpolasi X=new Interpolasi();
+        //Interpolasi X=new Interpolasi();
 
 
         

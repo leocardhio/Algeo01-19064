@@ -34,6 +34,12 @@ public class Matriks {
         this.nKol = tabel[0].length;
     }
 
+    public Matriks(Matriks M){
+        this.Mat = M.Mat;
+        this.nBrs = M.nBrs;
+        this.nKol = M.nKol;
+    }
+
     public Matriks(){
         String filename;
         boolean isValid;

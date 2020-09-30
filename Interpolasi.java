@@ -8,6 +8,7 @@ public class Interpolasi {
 //  Membuat polinom yang dapat menafsir 
 //  nilai Pn(Xn) dalam rentang [X0..Xn]
     private Point[] arrP;
+    private float[] arr;
     private Matriks M;
     private MAugmented MAug;
     Scanner scanner=new Scanner(System.in);
@@ -22,11 +23,11 @@ public class Interpolasi {
         
         InputMatriks(n);
         System.out.println(this.M);
-        this.MAug = new MAugmented(this.M);
-   
         
         this.M.gauss();
         System.out.println(this.M);
+
+        //for (int i=0;i<n+1)
     }
 
 /* !!!!!*******************************************************!!!!! */
@@ -45,7 +46,7 @@ public class Interpolasi {
     }
 
     private void InputMatriks(int n){
-        this.M=new Matriks(new float[n+1][n+2]);
+        this.M=new Matriks(n+1, n+2);
         
         for (int i=0;i<=n;i++){
             for (int j=0;j<=n;j++){

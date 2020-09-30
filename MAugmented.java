@@ -3,33 +3,33 @@ public class MAugmented extends Matriks{
 
 //  KONSTRUKTOR
     public MAugmented (Matriks M){
-        makeMatKoef(M);
-        makeMatVal(M);
+        super(M);
+        makeMatKoef();
+        makeMatVal();
     }
 
-
-    private void makeMatKoef (Matriks M){
-        this.MatKoef = new Matriks(M.getnBrs(),M.getnKol()-1);
-        setMatKoef(M);
+    private void makeMatKoef (){
+        this.MatKoef = new Matriks(super.getnBrs() ,super.getnKol()-1);
+        setMatKoef();
     }
 
-    private void makeMatVal (Matriks M){
-        this.MatVal = new Matriks(M.getnBrs(), 1);
-        setMatVal(M);
+    private void makeMatVal (){
+        this.MatVal = new Matriks(super.getnBrs(), 1);
+        setMatVal();
     }
 
 //  SET
-    private void setMatKoef (Matriks M){
+    private void setMatKoef (){
         for (int i=0; i<this.MatKoef.getnBrs(); i++){
             for (int j=0; j<this.MatKoef.getnKol(); j++){
-                this.MatKoef.set(i, j, M.get(i,j));
+                this.MatKoef.set(i, j, super.get(i,j));
             }
         }
     }
 
-    private void setMatVal (Matriks M){
+    private void setMatVal (){
         for (int i=0; i<this.MatVal.getnBrs(); i++){
-            this.MatVal.set(i, 0, M.get(i,M.getnKol()-1));
+            this.MatVal.set(i, 0, super.get(i,super.getnKol()-1));
         }
     }
 }
