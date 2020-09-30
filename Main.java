@@ -1,11 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        // Matriks M = new Matriks(new float[][] { {3, 5, 6},
-        //                                         {7 ,4, 8},
-        //                                         {6, 5, 1}});
-        Matriks augmented = new Matriks(new float[][] { {0, 3, -1, 5},
-                                                        {0, 0, -3, 3},
-                                                        {0, 0, -12, 1} });
+        Matriks M = new Matriks(new float[][] { {3, 5, 6},
+                                                {7 ,4, 8},
+                                                {6, 5, 1}});
+
+        Matriks augmented = new Matriks(new float[][] { {1, 1, 1, 1},
+                                                        {1, 2, 4, 2},
+                                                        {1, 3, 9, 3} });
         
         
         MAugmented augmented2 = new MAugmented (augmented);
@@ -23,7 +24,7 @@ public class Main {
         // augmented.gauss();
         // System.out.println(augmented);
         
-        //Interpolasi X=new Interpolasi();
+        Interpolasi X=new Interpolasi();
 
 
         
