@@ -1,7 +1,13 @@
 public class MAugmented extends Matriks{
-    Matriks MatKoef, MatVal;
+    public Matriks MatKoef, MatVal;
 
 //  KONSTRUKTOR
+    public MAugmented (float[][] mat) {
+        super(mat);
+        makeMatKoef();
+        makeMatVal();
+    }
+
     public MAugmented (Matriks M){
         super(M);
         makeMatKoef();
@@ -81,8 +87,8 @@ public class MAugmented extends Matriks{
                 }
             }
         }
-        gaussMat.setMatKoef();
-        gaussMat.setMatVal();
+        gaussMat.makeMatKoef();
+        gaussMat.makeMatVal();
         return gaussMat;
     }
 
@@ -117,9 +123,48 @@ public class MAugmented extends Matriks{
                 }
             }
         }
-        gaussMat.setMatKoef();
-        gaussMat.setMatVal();
+        gaussMat.makeMatKoef();
+        gaussMat.makeMatVal();
         return gaussMat;
+    }
+
+    public String kalimatSolusi() {
+        if (isInconsistent()) {
+            return "Tidak ada solusi\n";
+        }
+        else if (nBrsEff() == MatKoef.getnKol()) {
+            StringBuilder kalimat = new StringBuilder();
+            for (int j = MatKoef.getIdxMin(); j < MatKoef.getnKol(); j++) {
+                kalimat.append(String.format("x%d = %.2f\n", j + 1, MatVal.get(j, 0)));
+            }
+
+            return kalimat.toString();
+        }
+        else {
+            StringBuilder kalimat = new StringBuilder();
+            for (int i = MatKoef.getIdxMin(); i < nBrsEff(); i++) {
+                kalimat.append(String.format("x%d = %.2f", i + 1, MatVal.get(i, 0)));
+                
+                for (int j = nBrsEff(); j < MatKoef.getnKol(); j++) {
+                    if (Math.abs(MatKoef.get(i, j)) > 0.0000001) {
+                        String tanda = (MatKoef.get(i, j) > 0) ? "-" : "+";
+                        kalimat.append(String.format(" %s %.2fx%d", tanda, Math.abs(MatKoef.get(i, j)), j + 1));
+                    }
+                }
+
+                kalimat.append("\n");
+            }
+
+            for (int j = nBrsEff(); j < MatKoef.getnKol(); j++) {
+                kalimat.append(String.format("x%d", j + 1));
+                if (j != MatKoef.getnKol() - 1) {
+                    kalimat.append(", ");
+                }
+            }
+            kalimat.append(" bilangan riil\n");
+
+            return kalimat.toString();
+        }
     }
 
     private void makeMatKoef (){
@@ -133,7 +178,7 @@ public class MAugmented extends Matriks{
     }
 
 //  SET
-    public void setMatKoef (){
+    private void setMatKoef (){
         for (int i=0; i<this.MatKoef.getnBrs(); i++){
             for (int j=0; j<this.MatKoef.getnKol(); j++){
                 this.MatKoef.set(i, j, super.get(i,j));
@@ -141,9 +186,41 @@ public class MAugmented extends Matriks{
         }
     }
 
-    public void setMatVal (){
+    private void setMatVal (){
         for (int i=0; i<this.MatVal.getnBrs(); i++){
             this.MatVal.set(i, 0, super.get(i,super.getnKol()-1));
         }
+    }
+
+    private boolean isBarisKoefNol(int i) {
+        for (int j = MatKoef.getIdxMin(); j < MatKoef.getnKol(); j++) {
+            if (MatKoef.get(i, j) != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isInconsistent() {
+        for (int i = MatKoef.getIdxMin(); i < MatKoef.getnBrs(); i++) {
+            if (isBarisKoefNol(i) && MatVal.get(i, 0) != 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int nBrsEff() {
+        int nEff = MatKoef.getnBrs();
+
+        for (int i = MatKoef.getIdxMin(); i < MatKoef.getnBrs(); i++) {
+            if (isBarisKoefNol(i) && MatVal.get(i, 0) == 0) {
+                nEff -= 1;
+            }
+        }
+
+        return nEff;
     }
 }
