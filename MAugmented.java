@@ -8,6 +8,12 @@ public class MAugmented extends Matriks{
         makeMatVal();
     }
 
+    public Matriks inversSPL() {
+        Matriks inversKoef = this.MatKoef.invers();
+
+        return inversKoef.kaliMatriks(this.MatVal);
+    }
+
     private void makeMatKoef (){
         this.MatKoef = new Matriks(super.getnBrs() ,super.getnKol()-1);
         setMatKoef();
