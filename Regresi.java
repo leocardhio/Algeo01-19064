@@ -42,6 +42,7 @@ public class Regresi {
         System.out.println("taksiran:");
         taksirNilai();
         System.out.println(tabTaksir);;
+        scanner.close();
     }
 
     private void makeTabEQ(int n, int k) {
@@ -63,6 +64,7 @@ public class Regresi {
                 this.tabEQ.set(i, j, scanner.nextFloat());
             }
         }
+        scanner.close();
     }
 
     private void makeTabTaksir(int nTaksir, int k) {
@@ -83,6 +85,7 @@ public class Regresi {
                 }
             }
         }
+        scanner.close();
     }
 
     private void makeTabNormal(int l) {
