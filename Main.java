@@ -25,7 +25,8 @@ public class Main {
         // augmented.MakeFile();
         // augmented.gauss();
         // System.out.println(augmented);
-        
+        MakeFile mf=new MakeFile(augmented.toString());
+
         Interpolasi X=new Interpolasi();
 
 
