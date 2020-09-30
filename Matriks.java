@@ -151,6 +151,23 @@ public class Matriks {
         return transpose;
     }
 
+    public Matriks kaliMatriks(Matriks m2) {
+        float val;
+        Matriks hasil = new Matriks(this.nBrs, m2.nKol);
+
+        for (int i = idxMin; i < hasil.getnBrs(); i++) {
+            for (int j = idxMin; j < hasil.getnKol(); j++) {
+                val = 0;
+                for (int k = idxMin; k < this.getnKol(); k++) {
+                    val += this.get(i, k) * m2.get(k, j);
+                }
+                hasil.set(i, j, val);
+            }
+        }
+
+        return hasil;
+    }
+
     public void kaliKonstanta(double c) {
         //mengalikan semua elemen this.Mat dengan c
         for (int i = idxMin; i < nBrs; i++) {
