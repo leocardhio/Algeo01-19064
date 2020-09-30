@@ -9,8 +9,7 @@ public class Main {
                                                 {6, 5, 1}});
         Matriks augmented = new Matriks(new float[][] { {0, 3, -1, 5},
                                                         {0, 0, -3, 3},
-                                                        {-2, 0, -12, 1} });
-        
+                                                        {0, 0, -12, 1} });
         
         
         MAugmented augmented2 = new MAugmented (augmented);

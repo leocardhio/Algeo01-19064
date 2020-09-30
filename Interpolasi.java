@@ -9,6 +9,7 @@ public class Interpolasi {
 //  nilai Pn(Xn) dalam rentang [X0..Xn]
     private Point[] arrP;
     private Matriks M;
+    private MAugmented MAug;
     Scanner scanner=new Scanner(System.in);
 
     public Interpolasi(){
@@ -21,8 +22,9 @@ public class Interpolasi {
         
         InputMatriks(n);
         System.out.println(this.M);
-
-//      GAUSS UNDER CONSTRUCTION      
+        this.MAug = new MAugmented(this.M);
+   
+        
         this.M.gauss();
         System.out.println(this.M);
     }

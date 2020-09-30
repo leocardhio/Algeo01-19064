@@ -1,4 +1,4 @@
-public class MAugmented {//extends Matriks{
+public class MAugmented extends Matriks{
     Matriks MatKoef, MatVal;
 
 //  KONSTRUKTOR
