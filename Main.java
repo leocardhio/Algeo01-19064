@@ -1,13 +1,8 @@
 public class Main {
-/*
-            NOTE LEO: kayaknya kita harus misahin matriks A dan 
-                      matriks b di Ax=b
-*/
     public static void main(String[] args) {
-        Matriks M = new Matriks(new float[][] { {3, 5, 6},
-                                                {7 ,4, 8},
-                                                {6, 5, 1}});
-
+        // Matriks M = new Matriks(new float[][] { {3, 5, 6},
+        //                                         {7 ,4, 8},
+        //                                         {6, 5, 1}});
         Matriks augmented = new Matriks(new float[][] { {0, 3, -1, 5},
                                                         {0, 0, -3, 3},
                                                         {0, 0, -12, 1} });
@@ -16,10 +11,12 @@ public class Main {
         MAugmented augmented2 = new MAugmented (augmented);
         System.out.println(augmented2.MatKoef);
         System.out.println(augmented2.MatVal);
-        Matriks Mgauss = augmented.gaussjor();
-        //System.out.println(Mgauss);
-        //System.out.println(M);
-        //System.out.println("determinan: " + M.determinan());
+        Matriks val = augmented2.cramer();
+        System.out.println(val);
+        // Matriks Mgauss = augmented.gaussjor();
+        // System.out.println(Mgauss);
+        // System.out.println(M);
+        // System.out.println("determinan: " + M.determinan());
 
         // Matriks augmented = new Matriks();
         // augmented.MakeFile();

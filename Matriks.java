@@ -141,7 +141,7 @@ public class Matriks {
         return matStr.toString();
     }
 
-    //SOAL/TUGAS
+    // SOAL/TUGAS
     public Matriks transpose() {
         //Me-return new Matriks dengan Mat berupa transpose dari this.Mat
         Matriks transpose = new Matriks(nKol, nBrs);
@@ -165,8 +165,7 @@ public class Matriks {
     }
 
     public Matriks gauss() {
-        //jadiin me-return new Matriks mirip kayak invers(), coba testcase
-        //dari spek tubes (kalo belom)
+        //coba testcase dari spek tubes (kalo belom)
         int i, j, a, b, skip = 0;
         float div, mul, temp;
         boolean valid = true;
@@ -230,8 +229,7 @@ public class Matriks {
 
     public Matriks gaussjor() {
         //Mengubah this.Mat jadi eselon tereduksi
-        //jadiin me-return new Matriks mirip kayak invers(), coba testcase
-        //dari spek tubes (kalo belom)
+        //coba testcase dari spek tubes (kalo belom)
         int i, j, a, b;
         float mul;
         boolean found;
@@ -398,7 +396,7 @@ public class Matriks {
             System.out.println("Matriks ini tidak punya invers, me-return matriks ini.");
             return this;
         }
-        
+
         Matriks gaussMat = new Matriks(nBrs, nKol);
         for (i = idxMin; i < nBrs; i++) {
             for (j = idxMin; j < nKol; j++) {
