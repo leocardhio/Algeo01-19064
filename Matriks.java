@@ -78,6 +78,7 @@ public class Matriks {
                 isValid=false;
             }
         } while (!isValid);
+        scanner.close();
     }
 
     //GETTER SETTER
@@ -113,6 +114,7 @@ public class Matriks {
                 this.Mat[i][j] = scanner.nextFloat();
             }
         }
+        scanner.close();
     }
 
     public String toString() {
@@ -225,7 +227,7 @@ public class Matriks {
     }
 
     public void gauss() {
-        //TODO jadiin me-return new Matriks mirip kayak invers(), coba testcase
+        //jadiin me-return new Matriks mirip kayak invers(), coba testcase
         //dari spek tubes (kalo belom)
         int i, j, a, b, skip = 0;
         float div, mul, temp;
@@ -259,14 +261,16 @@ public class Matriks {
             }
             if (valid) {
                 if (i + skip < (nKol - 1)) {
-                    for (j = i + skip; j < nKol; ++j) {
-                        Mat[i][j] /= div;
+                    for (j = 0; j < nKol; ++j) {
+                        if (Mat[i][j] != 0) {
+                            Mat[i][j] /= div;
+                        }
                     }
                 }
                 if (i < (nBrs - 1)) {
                     for ( a = i + 1; a < nBrs; ++a) {
                         mul = Mat[a][i+skip] / Mat[i][i+skip];
-                        for (b = i + skip; b < nKol; ++b) {
+                        for (b = 0; b < nKol; ++b) {
                             Mat[a][b] -= (mul*Mat[i][b]);
                         }
                     }
@@ -277,7 +281,7 @@ public class Matriks {
 
     public void gaussjor() {
         //Mengubah this.Mat jadi eselon tereduksi
-        //TODO jadiin me-return new Matriks mirip kayak invers(), coba testcase
+        //jadiin me-return new Matriks mirip kayak invers(), coba testcase
         //dari spek tubes (kalo belom)
         int i, j, a, b;
         float mul;
@@ -296,12 +300,110 @@ public class Matriks {
             if (found) {
                 for ( a = 0; a < i; ++a) {
                     mul = Mat[a][j] / Mat[i][j];
-                    for (b = j; b < nKol; ++b) {
+                    for (b = 0; b < nKol; ++b) {
                         Mat[a][b] -= (mul*Mat[i][b]);
                     }
                 }
             }
         }
+    }
+
+    public Matriks inversOBE() {
+        int i, j, a, b, skip = 0;
+        float div, mul, temp;
+        boolean found, valid = true;
+        Matriks I = new Matriks(nBrs);
+        float determinan = this.determinan();
+        if (this.nBrs != this.nKol) {
+            throw new java.lang.RuntimeException("Matriks tidak persegi.");
+        }
+        else if (determinan == 0) {
+            System.out.println("Matriks ini tidak punya invers, me-return matriks ini.");
+            return this;
+        }
+        for (i = 0; i < nBrs; i++) {
+            for (j = 0; j < nBrs; j++) {
+                if (i == j) {
+                    I.set(i, i, 1);
+                }
+                else {
+                    I.set(i, j, 0);
+                }
+            }
+        }
+        for (i = 0; i < nBrs; ++i) {
+            div = Mat[i][i+skip];
+            if (div == 0) {
+                valid = false;
+                for (j = i; j < nKol && !valid;) {
+                    for ( a = i; a < nBrs && !valid;) {
+                        if (Mat[a][j] != 0) {
+                            valid = true;
+                        }
+                        else {
+                            a++;
+                        }
+                    }
+                    if (valid) {
+                        for (; j < nKol; ++j) {
+                            temp = Mat[i][j];
+                            Mat[i][j] = Mat[a][j];
+                            Mat[a][j] = temp;
+                            temp = I.get(i, j);
+                            I.set(i, j, I.get(a, j));
+                            I.set(a, j, temp);
+                        }
+                        div = Mat[i][i+skip];
+                    }
+                    else {
+                        j += 1;
+                        skip += 1;
+                    }
+                }
+            }
+            if (valid) {
+                if (i + skip < nKol) {
+                    for (j = 0; j < nKol; ++j) {
+                        if (Mat[i][j] != 0) {
+                            Mat[i][j] /= div;
+                        }
+                        if (I.get(i, j) != 0) {
+                            I.set(i, j, (I.get(i, j))/div);
+                        }
+                    }
+                }
+                if (i < (nBrs - 1)) {
+                    for ( a = i + 1; a < nBrs; ++a) {
+                        mul = Mat[a][i+skip] / Mat[i][i+skip];
+                        for (b = 0; b < nKol; ++b) {
+                            Mat[a][b] -= (mul*Mat[i][b]);
+                            I.set(a, b, ((I.get(a, b)) - mul*(I.get(i, b))));
+                        }
+                    }
+                }
+            }
+        }
+        for ( i = 1; i < nBrs; ++i) {
+            found = false;
+            for (j = i; j < nKol && !found;) {
+                if (Mat[i][j] == 1) {
+                    found = true;
+                }
+                else {
+                    ++j;
+                }
+            }
+            if (found) {
+                for ( a = 0; a < i; ++a) {
+                    mul = Mat[a][j] / Mat[i][j];
+                    for (b = 0; b < nKol; ++b) {
+                        Mat[a][b] -= (mul*Mat[i][b]);
+                        I.set(a, b, ((I.get(a, b)) - mul*(I.get(i, b))));
+                    }
+                }
+            }
+        }
+        return I;
     }
 
     public Matriks invers() {
@@ -351,40 +453,43 @@ public class Matriks {
     }
 
 
-//  UNDER CONSTRUCTION - LEO
-    public float SPLCramer(){
-        Matriks Mtemp;
-        float detMtemp, detM;
-
-        detM=determinan();
-    }
-
-
-    public void MakeFile(){
-        String filename;
-        boolean isFail;
-        Scanner scanner= new Scanner(System.in);
-
-        do {
-            isFail=false;
-            
-            System.out.print("Masukkan nama file (tanpa ext.): ");  
-            filename=scanner.nextLine();  
-
-            File nf=new File("./",filename+".txt");
-            if(!nf.exists() && !nf.isDirectory()){
-                try{
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(filename+".txt"));
-                    writer.write(this.toString());
-                    writer.flush();
-                    System.out.println("File sukses dibuat");
-                } catch (IOException err){};
-            } else {
-                System.out.println("Nama file sudah diambil, coba dengan nama yang lain");
-                isFail=true;
-            }
-        } while (isFail);
-    }
-
+    //  UNDER CONSTRUCTION - LEO
+        public float SPLCramer(){
+            Matriks Mtemp;
+            float detMtemp, detM;
     
-}
+            detM=determinan();
+            return detM;
+        }
+    
+    
+        public void MakeFile(){
+            String filename;
+            boolean isFail;
+            Scanner scanner= new Scanner(System.in);
+    
+            do {
+                isFail=false;
+                
+                System.out.print("Masukkan nama file (tanpa ext.): ");  
+                filename=scanner.nextLine();  
+    
+                File nf=new File("./",filename+".txt");
+                if(!nf.exists() && !nf.isDirectory()){
+                    try{
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(filename+".txt"));
+                        writer.write(this.toString());
+                        writer.flush();
+                        writer.close();
+                        System.out.println("File sukses dibuat");
+                    } catch (IOException err){};
+                } else {
+                    System.out.println("Nama file sudah diambil, coba dengan nama yang lain");
+                    isFail=true;
+                }
+            } while (isFail);
+            scanner.close();
+        }
+    
+        
+    }
