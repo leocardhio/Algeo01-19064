@@ -64,9 +64,7 @@ public class Matriks {
                     sf.nextFloat();
                 }
                 this.nKol/=this.nBrs;
-                System.out.printf("%d %d",this.nBrs,this.nKol);
                 sf.close();
-
 
                 this.Mat=new float[this.nBrs][this.nKol];
                 sf = new Scanner(new File("./"+filename+".txt"));
@@ -75,7 +73,6 @@ public class Matriks {
                         
                         if(sf.hasNextFloat()){
                             set(i, j, sf.nextFloat());
-                            System.out.println("tes");
                         }
                     }
                 }
@@ -84,7 +81,6 @@ public class Matriks {
                 isValid=false;
             }
         } while (!isValid);
-        scanner.close();
     }
 
     //GETTER SETTER
@@ -179,98 +175,6 @@ public class Matriks {
                 Mat[i][j] *= c;
             }
         }
-    }
-
-    public Matriks gauss() {
-        //coba testcase dari spek tubes (kalo belom)
-        int i, j, a, b, skip = 0;
-        float div, mul, temp;
-        boolean valid = true;
-
-        Matriks gaussMat = new Matriks(nBrs, nKol);
-        for (i = idxMin; i < nBrs; i++) {
-            for (j = idxMin; j < nKol; j++) {
-                gaussMat.set(i, j, get(i, j));
-            }
-        }
-
-        for (i = 0; i < nBrs; ++i) {
-            div = gaussMat.get(i, i+skip);
-            if (div == 0) {
-                valid = false;
-                for (j = i; j < nKol && !valid;) {
-                    for (a = i; a < nBrs && !valid;) {
-                        if (gaussMat.get(a, j) != 0) {
-                            valid = true;
-                        }
-                        else {
-                            a++;
-                        }
-                    }
-                    
-                    if (valid) {
-                        for (; j < nKol; ++j) {
-                            temp = gaussMat.get(i, j);
-                            gaussMat.set(i, j, gaussMat.get(a, j));
-                            gaussMat.set(a, j, temp);
-                        }
-                        div = gaussMat.get(i, i+skip);
-                    }
-                    else {
-                        j += 1;
-                        skip += 1;
-                    }
-                }
-            }
-
-            if (valid) {
-                if (i + skip < (nKol - 1)) {
-                    for (j = 0; j < nKol; ++j) {
-                        if (gaussMat.get(i, j) != 0) {
-                            gaussMat.set(i, j, gaussMat.get(i, j)/div);
-                        }
-                    }
-                }
-                if (i < (nBrs - 1)) {
-                    for (a = i + 1; a < nBrs; ++a) {
-                        mul = gaussMat.get(a, i+skip) / gaussMat.get(i, i+skip);
-                        for (b = 0; b < nKol; ++b) {
-                            gaussMat.set(a, b, gaussMat.get(a, b) - (mul*gaussMat.get(i, b)));
-                        }
-                    }
-                }
-            }
-        }
-        return gaussMat;
-    }
-
-    public Matriks gaussjor() {
-        //Mengubah this.Mat jadi eselon tereduksi
-        //coba testcase dari spek tubes (kalo belom)
-        int i, j, a, b;
-        float mul;
-        boolean found;
-        Matriks gaussMat = gauss();
-        for (i = 1; i < nBrs; ++i) {
-            found = false;
-            for (j = i; j < nKol && !found;) {
-                if (gaussMat.get(i, j) == 1) {
-                    found = true;
-                }
-                else {
-                    ++j;
-                }
-            }
-            if (found) {
-                for (a = 0; a < i; ++a) {
-                    mul = gaussMat.get(a, j) / gaussMat.get(i, j);
-                    for (b = 0; b < nKol; ++b) {
-                        gaussMat.set(a, b, gaussMat.get(a, b) - (mul*gaussMat.get(i, b)));
-                    }
-                }
-            }
-        }
-        return gaussMat;
     }
 
     public float determinan() {
@@ -500,44 +404,4 @@ public class Matriks {
         }
         return I;
     }
-
-
-    //  UNDER CONSTRUCTION - LEO
-        // public float SPLCramer(){
-        //     Matriks Mtemp;
-        //     float detMtemp, detM;
-    
-        //     detM=determinan();
-        //     return detM;
-        // }
-    
-    
-    public void MakeFile(){
-        String filename;
-        boolean isFail;
-        Scanner scanner= new Scanner(System.in);
-
-        do {
-            isFail=false;
-            
-            System.out.print("Masukkan nama file (tanpa ext.): ");  
-            filename=scanner.nextLine();  
-
-            File nf=new File("./",filename+".txt");
-            if(!nf.exists() && !nf.isDirectory()){
-                try{
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(filename+".txt"));
-                    writer.write(this.toString());
-                    writer.flush();
-                    writer.close();
-                    System.out.println("File sukses dibuat");
-                } catch (IOException err){};
-            } else {
-                System.out.println("Nama file sudah diambil, coba dengan nama yang lain");
-                isFail=true;
-            }
-        } while (isFail);
-        scanner.close();
-    }
-
 }

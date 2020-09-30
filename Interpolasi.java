@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 class Point {
@@ -9,51 +10,86 @@ public class Interpolasi {
 //  nilai Pn(Xn) dalam rentang [X0..Xn]
     private Point[] arrP;
     private float[] arr;
-    private Matriks M;
+    private Matriks M,Mfile;
     private MAugmented MAug;
     private float x,y,sumMultKoef;
-    Scanner scanner=new Scanner(System.in);
 
     public Interpolasi(){
-        int n;
+        int n,choose;
+        boolean isValid,isFirst;
+        Scanner scanner=new Scanner(System.in);
+        String output1,output2,result;
+        MakeFile mf;
         
-        System.out.println("Masukkan n (derajat polinom): ");
-        n=scanner.nextInt();
+        do {
+            System.out.printf("1. Membaca Matriks dari keyboard\n2. Membaca Matriks dari File\nPilihan: ");
+            choose = scanner.nextInt();
+            if (choose==1){
+                System.out.print("Masukkan n (derajat polinom): ");
+                n=scanner.nextInt();
+                BacaArr(n);
+                isValid=true; 
+            } else if (choose==2){
+                this.Mfile = new Matriks();
+                n = this.Mfile.getnBrs() - 1;
+                InputFromFile(n);
+                isValid=true;
+            } else {
+                System.out.println("Pilihan tidak tersedia!");
+                isValid=false;
+                n = -1;
+            }
+        }   while (!isValid);
 
-        BacaArr(n);        
-        
         InputMatriks(n);
-        System.out.println(this.M);
         
         this.M=this.M.gauss();
-        System.out.println(this.M);
 
-        
         CalcKoef(n);
-        for (int i=0;i<n+1;i++){
-            System.out.printf("%.4f\n",arr[i]);
-        }
 
+        isFirst=true;
+        output2="";
+        output2+="P(x)=";
         for (int i=0;i<n+1;i++){
-            if (i==0){
-                System.out.printf("\nP(x)=");
-                System.out.printf("%.4f",arr[i]);
-            } else if (i!=0 && arr[i]>=0){
-                if (i==1){
-                    System.out.printf("+%.4fx",arr[i]);
-                } else {
-                    System.out.printf("+%.4fx^%d",arr[i],i);
+            if (isFirst){
+                if (i==0 && arr[i]!=0){
+                    output2+=String.valueOf(arr[i]);
+                    isFirst=false;
+                } else if (arr[i]>0){
+                    if (i==1){
+                        output2+=String.valueOf(arr[i])+"x";
+                    } else {
+                        output2+=String.valueOf(arr[i])+"x^"+String.valueOf(i);
+                    }
+                    isFirst=false;
+                } else if (arr[i]<0) {
+                    if (i==1){
+                        output2+=String.valueOf(arr[i])+"x";
+                    } else {
+                        output2+=String.valueOf(arr[i])+"x^"+String.valueOf(i);
+                    }
+                    isFirst=false;
                 }
-            } else {
+            } else if (arr[i]>0){
                 if (i==1){
-                    System.out.printf("%.4fx",arr[i]);
+                    output2+="+"+String.valueOf(arr[i])+"x";
                 } else {
-                    System.out.printf("%.4fx^%d",arr[i],i);
+                    output2+="+"+String.valueOf(arr[i])+"x^"+String.valueOf(i);
+                }
+            } else if (arr[i]<0) {
+                if (i==1){
+                    output2+=String.valueOf(arr[i])+"x";
+                } else {
+                    output2+=String.valueOf(arr[i])+"x^"+String.valueOf(i);
                 }
             }
         }
-        System.out.printf("\n\nMasukkan nilai yang ingin ditafsir: ");
+
+        System.out.printf("\n"+output2);
+
+        System.out.printf("\nMasukkan nilai yang ingin ditaksir: ");
         x = scanner.nextFloat();
+        System.out.printf("\n");
         
         y=0;
         for (int i=0;i<n+1;i++){
@@ -65,12 +101,29 @@ public class Interpolasi {
             y+=sumMultKoef;
         }
         
-        System.out.printf("Nilai P(%f)=%.4f\n",x,y);
+        output1="";
+        output1+="Nilai P("+String.valueOf(x)+")="+String.valueOf(y);
+        System.out.println(output1);
 
+        result=output2+"\n\n"+output1;
+
+        do {
+            System.out.printf("Apakah anda ingin menyimpan hasil ke suatu file?\n1.Yes\n2.No\nPilihan: ");
+            choose=scanner.nextInt();
+            if(choose==1){
+                mf = new MakeFile(result);
+            } else if(choose==2){
+
+            } else {
+                isValid=false;
+            }
+        } while (!isValid);
     }
 
 /* !!!!!*******************************************************!!!!! */
     private void BacaArr(int n){
+        Scanner scanner=new Scanner(System.in);
+
         this.arrP=new Point[n+1];
         for (int i=0;i<this.arrP.length;i++){
             this.arrP[i]=new Point();
@@ -98,8 +151,22 @@ public class Interpolasi {
         }
     }
 
+    private void InputFromFile(int n){
+
+        this.arrP=new Point[n+1];
+        for (int i=0;i<this.arrP.length;i++){
+            this.arrP[i]=new Point();
+        }
+
+        for (int i=0;i<n+1;i++){
+            this.arrP[i].x=this.Mfile.get(i,0);
+            this.arrP[i].y=this.Mfile.get(i,1);
+        }
+    }
+
     private void CalcKoef (int n){
         this.arr = new float[n+1];
+
         for (int i=0;i<n+1;i++){
             this.arr[n-i] = this.M.get(n-i, n+1);
             for (int j=0;j<i;j++){
@@ -107,5 +174,4 @@ public class Interpolasi {
             }
         }
     }
-
 }
