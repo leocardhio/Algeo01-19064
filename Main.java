@@ -23,8 +23,14 @@ public class Main {
         // augmented.MakeFile();
         // augmented.gauss();
         // System.out.println(augmented);
+<<<<<<< HEAD
+        MakeFile mf=new MakeFile(augmented.toString());
+
+        Interpolasi X=new Interpolasi();
+=======
         
         // Interpolasi X=new Interpolasi();
+>>>>>>> bb84e8c6441b846376b104f7916ebf1c504dae65
 
 
         

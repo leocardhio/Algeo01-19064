@@ -64,9 +64,7 @@ public class Matriks {
                     sf.nextFloat();
                 }
                 this.nKol/=this.nBrs;
-                System.out.printf("%d %d",this.nBrs,this.nKol);
                 sf.close();
-
 
                 this.Mat=new float[this.nBrs][this.nKol];
                 sf = new Scanner(new File("./"+filename+".txt"));
@@ -75,7 +73,6 @@ public class Matriks {
                         
                         if(sf.hasNextFloat()){
                             set(i, j, sf.nextFloat());
-                            System.out.println("tes");
                         }
                     }
                 }
@@ -84,7 +81,6 @@ public class Matriks {
                 isValid=false;
             }
         } while (!isValid);
-        scanner.close();
     }
 
     //GETTER SETTER
@@ -408,44 +404,4 @@ public class Matriks {
         }
         return I;
     }
-
-
-    //  UNDER CONSTRUCTION - LEO
-        // public float SPLCramer(){
-        //     Matriks Mtemp;
-        //     float detMtemp, detM;
-    
-        //     detM=determinan();
-        //     return detM;
-        // }
-    
-    
-    public void MakeFile(){
-        String filename;
-        boolean isFail;
-        Scanner scanner= new Scanner(System.in);
-
-        do {
-            isFail=false;
-            
-            System.out.print("Masukkan nama file (tanpa ext.): ");  
-            filename=scanner.nextLine();  
-
-            File nf=new File("./",filename+".txt");
-            if(!nf.exists() && !nf.isDirectory()){
-                try{
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(filename+".txt"));
-                    writer.write(this.toString());
-                    writer.flush();
-                    writer.close();
-                    System.out.println("File sukses dibuat");
-                } catch (IOException err){};
-            } else {
-                System.out.println("Nama file sudah diambil, coba dengan nama yang lain");
-                isFail=true;
-            }
-        } while (isFail);
-        scanner.close();
-    }
-
 }
