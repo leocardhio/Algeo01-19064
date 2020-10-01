@@ -247,13 +247,12 @@ public class MAugmented extends Matriks{
         float detj, det;
         Matriks koef = this.MatKoef;
         Matriks val = this.MatVal;
-        
+
         det = koef.determinan();
         if (det == 0) {
             System.out.println("Matriks ini tidak memiliki solusi tunggal, me-return matriks ini.");
             return this;
         }
-        System.out.println("det: " + det);
 
         for (k = koef.getIdxMin(); k < koef.getnKol(); k++) {
             for (i = koef.getIdxMin(); i < koef.getnBrs(); i++) {
@@ -265,12 +264,11 @@ public class MAugmented extends Matriks{
                     }
                 }
             }
-            System.out.println(koef);
             detj = koef.determinan();
-            System.out.println("detj: " + detj);
             val.set(k, 0, detj/det);
         }
-
-        return MatVal;
+        MAugmented hasil = new MAugmented(koef);
+        hasil.MatVal = val;
+        return hasil;
     }
 }

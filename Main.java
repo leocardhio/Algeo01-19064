@@ -3,8 +3,8 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Menu a = new Menu();
-        Scanner scanner = new Scanner (System.in);
+        // Menu a = new Menu();
+        // Scanner scanner = new Scanner (System.in);
 
         // Matriks a = new Matriks(new float[][] {{1, 3, 3}, {3, 4, 5}});
         // Matriks b = new Matriks(new float[][] {{3}, {2}, {5}});
@@ -18,15 +18,15 @@ public class Main {
                                                         {1, 2, 4, 2},
                                                         {1, 3, 9, 3} }));
 
-        System.out.println(augmented.gaussjor());
-        System.out.println(augmented.inversSPL().kalimatSolusi());
+        // System.out.println(augmented.gaussjor());
+        System.out.println(augmented.cramer().kalimatSolusi());
         
         
         MAugmented augmented2 = new MAugmented (augmented);
         System.out.println(augmented2.MatKoef);
         System.out.println(augmented2.MatVal);
-        Matriks Mgauss = augmented.gauss();
-        System.out.println(Mgauss);
+        // Matriks Mgauss = augmented.gauss();
+        // System.out.println(Mgauss);
         //System.out.println(M);
         //System.out.println("determinan: " + M.determinan());
 
