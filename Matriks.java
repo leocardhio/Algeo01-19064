@@ -178,6 +178,98 @@ public class Matriks {
         }
     }
 
+    public Matriks gaussM() {
+        //coba testcase dari spek tubes (kalo belom)
+        int i, j, a, b, skip = 0;
+        float div, mul, temp;
+        boolean valid = true;
+
+        Matriks gaussMat = new Matriks(nBrs, nKol);
+        for (i = idxMin; i < nBrs; i++) {
+            for (j = idxMin; j < nKol; j++) {
+                gaussMat.set(i, j, get(i, j));
+            }
+        }
+
+        for (i = 0; i < nBrs; ++i) {
+            div = gaussMat.get(i, i+skip);
+            if (div == 0) {
+                valid = false;
+                for (j = i; j < nKol && !valid;) {
+                    for (a = i; a < nBrs && !valid;) {
+                        if (gaussMat.get(a, j) != 0) {
+                            valid = true;
+                        }
+                        else {
+                            a++;
+                        }
+                    }
+                    
+                    if (valid) {
+                        for (; j < nKol; ++j) {
+                            temp = gaussMat.get(i, j);
+                            gaussMat.set(i, j, gaussMat.get(a, j));
+                            gaussMat.set(a, j, temp);
+                        }
+                        div = gaussMat.get(i, i+skip);
+                    }
+                    else {
+                        j += 1;
+                        skip += 1;
+                    }
+                }
+            }
+
+            if (valid) {
+                if (i + skip < (nKol - 1)) {
+                    for (j = 0; j < nKol; ++j) {
+                        if (gaussMat.get(i, j) != 0) {
+                            gaussMat.set(i, j, gaussMat.get(i, j)/div);
+                        }
+                    }
+                }
+                if (i < (nBrs - 1)) {
+                    for (a = i + 1; a < nBrs; ++a) {
+                        mul = gaussMat.get(a, i+skip) / gaussMat.get(i, i+skip);
+                        for (b = 0; b < nKol; ++b) {
+                            gaussMat.set(a, b, gaussMat.get(a, b) - (mul*gaussMat.get(i, b)));
+                        }
+                    }
+                }
+            }
+        }
+        return gaussMat;
+    }
+
+    public Matriks gaussjorM() {
+        //Mengubah this.Mat jadi eselon tereduksi
+        //coba testcase dari spek tubes (kalo belom)
+        int i, j, a, b;
+        float mul;
+        boolean found;
+        Matriks gaussMat = gauss();
+        for (i = 1; i < nBrs; ++i) {
+            found = false;
+            for (j = i; j < nKol && !found;) {
+                if (gaussMat.get(i, j) == 1) {
+                    found = true;
+                }
+                else {
+                    ++j;
+                }
+            }
+            if (found) {
+                for (a = 0; a < i; ++a) {
+                    mul = gaussMat.get(a, j) / gaussMat.get(i, j);
+                    for (b = 0; b < nKol; ++b) {
+                        gaussMat.set(a, b, gaussMat.get(a, b) - (mul*gaussMat.get(i, b)));
+                    }
+                }
+            }
+        }
+        return gaussMat;
+    }
+
     public float determinan() {
         //Menghitung determinan dengan ekspansi kofaktor baris pertama
         if (this.nBrs != this.nKol) {
