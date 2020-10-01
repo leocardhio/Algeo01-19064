@@ -247,7 +247,7 @@ public class Matriks {
         int i, j, a, b;
         float mul;
         boolean found;
-        Matriks gaussMat = gauss();
+        Matriks gaussMat = gaussM();
         for (i = 1; i < nBrs; ++i) {
             found = false;
             for (j = i; j < nKol && !found;) {

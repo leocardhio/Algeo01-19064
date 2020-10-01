@@ -2,10 +2,10 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Matriks a = new Matriks(new float[][] {{1, 3, 3}, {3, 4, 5}});
-        Matriks b = new Matriks(new float[][] {{3}, {2}, {5}});
+        // Matriks a = new Matriks(new float[][] {{1, 3, 3}, {3, 4, 5}});
+        // Matriks b = new Matriks(new float[][] {{3}, {2}, {5}});
         
-        System.out.println(a.kaliMatriks(b));
+        // System.out.println(a.kaliMatriks(b));
         // Matriks M = new Matriks(new float[][] { {3, 5, 6},
         //                                         {7 ,4, 8},
         //                                         {6, 5, 1}});
