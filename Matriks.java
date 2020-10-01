@@ -1,9 +1,9 @@
-import java.io.BufferedWriter;
+// import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 // import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+// import java.io.FileWriter;
+// import java.io.IOException;
 import java.util.Scanner;
 
 public class Matriks {
@@ -81,6 +81,7 @@ public class Matriks {
                 isValid=false;
             }
         } while (!isValid);
+        scanner.close();
     }
 
     //GETTER SETTER
@@ -137,7 +138,7 @@ public class Matriks {
         return matStr.toString();
     }
 
-    //SOAL/TUGAS
+    // SOAL/TUGAS
     public Matriks transpose() {
         //Me-return new Matriks dengan Mat berupa transpose dari this.Mat
         Matriks transpose = new Matriks(nKol, nBrs);
@@ -317,7 +318,7 @@ public class Matriks {
             System.out.println("Matriks ini tidak punya invers, me-return matriks ini.");
             return this;
         }
-        
+
         Matriks gaussMat = new Matriks(nBrs, nKol);
         for (i = idxMin; i < nBrs; i++) {
             for (j = idxMin; j < nKol; j++) {
