@@ -1,4 +1,4 @@
-import java.io.IOException;
+// import java.io.IOException;
 import java.util.Scanner;
 
 class Point {
@@ -19,7 +19,6 @@ public class Interpolasi {
         boolean isValid,isFirst;
         Scanner scanner=new Scanner(System.in);
         String output1,output2,result;
-        MakeFile mf;
         
         do {
             System.out.printf("1. Membaca Matriks dari keyboard\n2. Membaca Matriks dari File\nPilihan: ");
@@ -43,7 +42,7 @@ public class Interpolasi {
 
         InputMatriks(n);
         
-        this.M=this.M.gauss();
+        this.M=this.M.gaussM();
 
         CalcKoef(n);
 
@@ -111,7 +110,7 @@ public class Interpolasi {
             System.out.printf("Apakah anda ingin menyimpan hasil ke suatu file?\n1.Yes\n2.No\nPilihan: ");
             choose=scanner.nextInt();
             if(choose==1){
-                mf = new MakeFile(result);
+                MakeFile mf = new MakeFile(result);
             } else if(choose==2){
 
             } else {
@@ -135,7 +134,6 @@ public class Interpolasi {
             System.out.printf("Masukkan y[%d]: ",i);
             this.arrP[i].y=scanner.nextFloat();
         }
-        scanner.close();
     }
 
     private void InputMatriks(int n){

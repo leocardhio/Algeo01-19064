@@ -81,7 +81,6 @@ public class Matriks {
                 isValid=false;
             }
         } while (!isValid);
-        scanner.close();
     }
 
     //GETTER SETTER
@@ -117,7 +116,19 @@ public class Matriks {
                 this.Mat[i][j] = scanner.nextFloat();
             }
         }
-        scanner.close();
+    }
+
+    public void bacaMatriksSPL(){
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = idxMin; i < nBrs; i++) {
+            for (int j = idxMin; j < nKol-1; j++) {
+                System.out.printf("a[%d,%d]: ", i, j);
+                this.Mat[i][j] = scanner.nextFloat();
+            }
+            System.out.printf("b[%d]: ", i);
+            this.Mat[i][nKol-1] = scanner.nextFloat();
+        }
     }
 
     public String toString() {
@@ -247,7 +258,7 @@ public class Matriks {
         int i, j, a, b;
         float mul;
         boolean found;
-        Matriks gaussMat = gauss();
+        Matriks gaussMat = gaussM();
         for (i = 1; i < nBrs; ++i) {
             found = false;
             for (j = i; j < nKol && !found;) {
