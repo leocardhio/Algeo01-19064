@@ -456,15 +456,15 @@ public class Menu {
         }
 
         StringBuilder result = new StringBuilder();
-        result.append("matriks persamaan awal:\n");
+        result.append("\nmatriks persamaan awal:\n");
         result.append(reg.getTabEQ());
-        result.append("matriks persamaan normal:\n");
+        result.append("\nmatriks persamaan normal:\n");
         result.append(reg.getTabNormal());
-        result.append("solusi persamaan normal:\n");
+        result.append("\nsolusi persamaan normal:\n");
         result.append(reg.getSolusiTabNormal());
-        result.append("konstanta B:\n");
+        result.append("\nkonstanta B:\n");
         result.append(Arrays.toString(reg.getArrayB()));
-        result.append("\nhasil taksiran:\n");
+        result.append("\n\nhasil taksiran:\n");
         result.append(reg.getTabTaksir());
 
         System.out.println(result.toString());

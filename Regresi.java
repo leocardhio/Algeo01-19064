@@ -15,7 +15,7 @@ public class Regresi {
 
             tabEQ = new Matriks();
             System.out.println(tabEQ);
-            makeTabNormal(tabEQ.getnBrs() - 1);
+            makeTabNormal(tabEQ.getnKol() - 1);
 
             System.out.println("Membuat tabTaksir...");
             
