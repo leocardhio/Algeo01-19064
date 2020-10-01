@@ -117,7 +117,6 @@ public class Interpolasi {
                 isValid=false;
             }
         } while (!isValid);
-        scanner.close();
     }
 
 /* !!!!!*******************************************************!!!!! */
@@ -135,7 +134,6 @@ public class Interpolasi {
             System.out.printf("Masukkan y[%d]: ",i);
             this.arrP[i].y=scanner.nextFloat();
         }
-        scanner.close();
     }
 
     private void InputMatriks(int n){

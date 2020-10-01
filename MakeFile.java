@@ -31,6 +31,5 @@ public class MakeFile {
                 isFail=true;
             }
         } while (isFail);
-        scanner.close();
     }
 }
