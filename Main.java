@@ -15,7 +15,7 @@ public class Main {
                                                         {1, 3, 9, 3} }));
 
         System.out.println(augmented.gaussjor());
-        System.out.println(augmented.inversSPL());
+        System.out.println(augmented.inversSPL().kalimatSolusi());
         
         
         // MAugmented augmented2 = new MAugmented (augmented);
@@ -33,10 +33,10 @@ public class Main {
         
         // Interpolasi X=new Interpolasi();
 
-        Regresi a = new Regresi();
-        System.out.println(a.getTabNormal().toString());
-        System.out.println(Arrays.toString(a.getArrayB()));
-        System.out.println(a.taksiranToString());
+        // Regresi a = new Regresi();
+        // System.out.println(a.getTabNormal().toString());
+        // System.out.println(Arrays.toString(a.getArrayB()));
+        // System.out.println(a.taksiranToString());
         // MAugmented augmented1 = new MAugmented(new float[][] {  {1, -1, 2, -1, -1},
         //                                                         {2, 1, -2, -2, -2},
         //                                                         {-1, 2, -4, 1, 1},

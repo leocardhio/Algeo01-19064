@@ -20,10 +20,14 @@ public class MAugmented extends Matriks{
         makeMatVal();
     }
 
-    public Matriks inversSPL() {
+    public MAugmented inversSPL() {
+        //hasil.tulisMatriks -> inversKoef, hasil.kalimatSolusi -> x1,x2,x3 dll
         Matriks inversKoef = this.MatKoef.invers();
+        MAugmented hasil = new MAugmented(inversKoef);
+        hasil.MatKoef = inversKoef.gaussjorM();
+        hasil.MatVal = inversKoef.kaliMatriks(this.MatVal)
 
-        return inversKoef.kaliMatriks(this.MatVal);
+        return hasil;
     }
 
 
