@@ -2,14 +2,14 @@ public class MenuStrings {
 
     public static String menuawal() {
         StringBuilder menuawal = new StringBuilder();
-        menuawal.append("  (                        )                          ");
-        menuawal.append("  *   )          (        )\\ )  (        (      ( /(  ");
-        menuawal.append("` )  /(    (   ( )\\  (   (()/(  )\\ )     )\\     )\\()) ");
-        menuawal.append(" ( )(_))   )\\  )((_) )\\   /(_))(()/(  ((((_)(  ((_)\\  ");
-        menuawal.append("(_(_()) _ ((_)((_)_ ((_) (_))   /(_))_ )\\ _ )\\  _((_) ");
-        menuawal.append("|_   _|| | | | | _ )| __|/ __| (_)) __|(_)_\\(_)| \\| | ");
-        menuawal.append("  | |  | |_| | | _ \\| _| \\__ \\   | (_ | / _ \\  | .` | ");
-        menuawal.append("  |_|   \\___/  |___/|___||___/    \\___|/_/ \\_\\ |_|\\_| ");
+        menuawal.append("  (                        )                          \n");
+        menuawal.append("  *   )          (        )\\ )  (        (      ( /(  \n");
+        menuawal.append("` )  /(    (   ( )\\  (   (()/(  )\\ )     )\\     )\\()) \n");
+        menuawal.append(" ( )(_))   )\\  )((_) )\\   /(_))(()/(  ((((_)(  ((_)\\  \n");
+        menuawal.append("(_(_()) _ ((_)((_)_ ((_) (_))   /(_))_ )\\ _ )\\  _((_) \n");
+        menuawal.append("|_   _|| | | | | _ )| __|/ __| (_)) __|(_)_\\(_)| \\| | \n");
+        menuawal.append("  | |  | |_| | | _ \\| _| \\__ \\   | (_ | / _ \\  | .` | \n");
+        menuawal.append("  |_|   \\___/  |___/|___||___/    \\___|/_/ \\_\\ |_|\\_| \n");
         menuawal.append("------------MAIN MENU-----------\n");
         menuawal.append("1. Sistem Persamaan Linear\n");
         menuawal.append("2. Determinan\n");

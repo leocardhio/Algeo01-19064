@@ -2,43 +2,42 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Menu {
-    public boolean isOn;
+    public boolean isOn = true;
     
     public Menu() {
-        menuRegresi();
-        // isOn = true;
-        // System.out.print(MenuStrings.menuawal());
-        // Scanner scanner = new Scanner(System.in);
+        System.out.print(MenuStrings.menuawal());
+        Scanner scanner = new Scanner(System.in);
 
-        // int choice;
-        // do {
-        //     choice = scanner.nextInt();
-        //     if (choice < 1 || choice > 6) {
-        //         System.out.print("Silahkan input angka yang valid (1-6)\nPilihan: ");
-        //     }
-        // } while (choice < 1 || choice > 6);
-        // System.out.println();
+        int choice;
+        do {
+            choice = scanner.nextInt();
+            if (choice < 1 || choice > 6) {
+                System.out.print("Silahkan input angka yang valid (1-6)\nPilihan: ");
+            }
+        } while (choice < 1 || choice > 6);
+        System.out.println();
         
-        // switch(choice) {
-        //     case 1:
-        //         menuSPL();
-        //         break;
-        //     case 2:
-        //         menuDet();
-        //         break;
-        //     case 3:
-        //         menuInvers();
-        //         break;
-        //     case 4:
-        //         Interpolasi a = new Interpolasi();
-        //         break;
-        //     case 5:
-        //         menuRegresi();
-        //         break;
-        //     case 6:
-        //         System.out.println("keluar dari program\n");
-        //         break;
-        // }
+        switch(choice) {
+            case 1:
+                menuSPL();
+                break;
+            case 2:
+                menuDet();
+                break;
+            case 3:
+                menuInvers();
+                break;
+            case 4:
+                Interpolasi a = new Interpolasi();
+                break;
+            case 5:
+                menuRegresi();
+                break;
+            case 6:
+                System.out.println("keluar dari program\n");
+                isOn = false;
+                break;
+        }
     }
 
     private void menuSPL() {
