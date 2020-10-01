@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         // Matriks M = new Matriks(new float[][] { {3, 5, 6},
@@ -15,6 +17,9 @@ public class Main {
         System.out.println(augmentedgj.kalimatSolusi());
 
         Regresi a = new Regresi();
+        System.out.println(a.getTabNormal().toString());
+        System.out.println(Arrays.toString(a.getArrayB()));
+        System.out.println(a.taksiranToString());
         // MAugmented augmented1 = new MAugmented(new float[][] {  {1, -1, 2, -1, -1},
         //                                                         {2, 1, -2, -2, -2},
         //                                                         {-1, 2, -4, 1, 1},

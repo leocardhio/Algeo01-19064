@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Regresi {
     private Matriks tabEQ; //tabel n persamaan dengan k variabel
     private MAugmented tabNormal; //tabel normal estimation eq
+    private MAugmented solusiTabNormal;
     private Matriks tabTaksir; //tabel nilai yang akan di taksir
 
     public Regresi() {
@@ -28,21 +29,57 @@ public class Regresi {
         int nTaksir = scanner.nextInt();
 
         makeTabTaksir(nTaksir, k);
-
-        System.out.println(tabEQ);;
-        System.out.println();
-        System.out.println(tabNormal);;
-        System.out.println();
-        System.out.println("tabel B:");
-        this.tabNormal = this.tabNormal.gaussjor();
-        System.out.println(tabNormal);;
-        System.out.println("konstanta B:");
-        System.out.println(Arrays.toString(getArrayB()));
-        System.out.println();
-        System.out.println("taksiran:");
+        this.solusiTabNormal = this.tabNormal.gaussjor();
         taksirNilai();
-        System.out.println(tabTaksir);;
+        // System.out.println(tabEQ);;
+        // System.out.println();
+        // System.out.println(tabNormal);;
+        // System.out.println();
+        // System.out.println("tabel B:");
+        // this.tabNormal = this.tabNormal.gaussjor();
+        // System.out.println(tabNormal);;
+        // System.out.println("konstanta B:");
+        // System.out.println(Arrays.toString(getArrayB()));
+        // System.out.println();
+        // System.out.println("taksiran:");
+        // taksirNilai();
+        // System.out.println(taksiranToString());
         scanner.close();
+    }
+
+    public MAugmented getTabNormal() {
+        return this.tabNormal;
+    }
+
+    public String taksiranToString() {
+        StringBuilder stringTaksiran = new StringBuilder();
+        stringTaksiran.append("taksiran:\n");
+        for (int i = tabTaksir.getIdxMin(); i < tabTaksir.getnKol(); i++) {
+            if (i != tabTaksir.getnKol() - 1) {
+                stringTaksiran.append(String.format("x%d", i + 1));
+                stringTaksiran.append("\t");
+            }
+            else {
+                stringTaksiran.append("y");
+                stringTaksiran.append("\n");
+            }
+        }
+
+        stringTaksiran.append(tabTaksir.toString());
+
+        return stringTaksiran.toString();
+    }
+
+    public float[] getArrayB() {
+        //Mereturn array berisi konstanta Bn, n adalah indeks di array.
+        //array didapat dari matrix solusitabnormal
+        float[] arrayB = new float[solusiTabNormal.getnBrs()];
+
+        for (int i = solusiTabNormal.getIdxMin(); i < solusiTabNormal.getnBrs(); i++) {
+            arrayB[i] = solusiTabNormal.get(i, solusiTabNormal.getnKol() - 1);
+        }
+
+        return arrayB;
     }
 
     private void makeTabEQ(int n, int k) {
@@ -106,19 +143,6 @@ public class Regresi {
         }
         this.tabNormal.makeMatKoef();
         this.tabNormal.makeMatKoef();
-    }
-
-    private float[] getArrayB() {
-        //Mereturn array berisi konstanta Bn, n adalah indeks di array.
-        //array didapat dari hasil gaussjordan tabnormal, sebelum run getArrayB()
-        //harus tabNormal.gaussjor()
-        float[] arrayB = new float[tabNormal.getnBrs()];
-
-        for (int i = tabNormal.getIdxMin(); i < tabNormal.getnBrs(); i++) {
-            arrayB[i] = tabNormal.get(i, tabNormal.getnKol() - 1);
-        }
-
-        return arrayB;
     }
 
     private void taksirNilai() {
