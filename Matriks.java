@@ -1,9 +1,9 @@
-import java.io.BufferedWriter;
+// import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 // import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+// import java.io.FileWriter;
+// import java.io.IOException;
 import java.util.Scanner;
 
 public class Matriks {
@@ -81,6 +81,7 @@ public class Matriks {
                 isValid=false;
             }
         } while (!isValid);
+        scanner.close();
     }
 
     //GETTER SETTER

@@ -10,8 +10,8 @@ public class Interpolasi {
 //  nilai Pn(Xn) dalam rentang [X0..Xn]
     private Point[] arrP;
     private float[] arr;
-    private Matriks M,Mfile;
-    private MAugmented MAug;
+    private Matriks M, Mfile;
+    // private MAugmented MAug;
     private float x,y,sumMultKoef;
 
     public Interpolasi(){
@@ -134,7 +134,8 @@ public class Interpolasi {
             this.arrP[i].x=scanner.nextFloat();
             System.out.printf("Masukkan y[%d]: ",i);
             this.arrP[i].y=scanner.nextFloat();
-        } 
+        }
+        scanner.close();
     }
 
     private void InputMatriks(int n){

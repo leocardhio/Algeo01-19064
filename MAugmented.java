@@ -26,7 +26,7 @@ public class MAugmented extends Matriks{
         //jadiin me-return new Matriks mirip kayak invers(), coba testcase
         //dari spek tubes (kalo belom)
         int i, j, a, b, skip = 0;
-        float div, mul, temp;
+        float mul, temp, div = 0;
         boolean valid = true;
         int nBrs = super.getnBrs();
         int nKol = super.getnKol();
@@ -41,7 +41,9 @@ public class MAugmented extends Matriks{
         }
 
         for (i = 0; i < nBrs; ++i) {
-            div = gaussMat.get(i, i+skip);
+            if (i+skip < nKol) {
+                div = gaussMat.get(i, i+skip);
+            }
             if (div == 0) {
                 valid = false;
                 for (j = i; j < nKol && !valid;) {
@@ -102,7 +104,6 @@ public class MAugmented extends Matriks{
         MAugmented gaussMat = gauss();
         int nBrs = super.getnBrs();
         int nKol = super.getnKol();
-        int idxMin = super.getIdxMin();
 
         for (i = 1; i < nBrs; ++i) {
             found = false;
