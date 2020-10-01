@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Regresi {
     private Matriks tabEQ; //tabel n persamaan dengan k variabel
-    private Matriks tabNormal; //tabel normal estimation eq
+    private MAugmented tabNormal; //tabel normal estimation eq
     private Matriks tabTaksir; //tabel nilai yang akan di taksir
 
     public Regresi() {
@@ -34,7 +34,7 @@ public class Regresi {
         System.out.println(tabNormal);;
         System.out.println();
         System.out.println("tabel B:");
-        this.tabNormal.gaussjor();
+        this.tabNormal = this.tabNormal.gaussjor();
         System.out.println(tabNormal);;
         System.out.println("konstanta B:");
         System.out.println(Arrays.toString(getArrayB()));
@@ -64,7 +64,6 @@ public class Regresi {
                 this.tabEQ.set(i, j, scanner.nextFloat());
             }
         }
-        scanner.close();
     }
 
     private void makeTabTaksir(int nTaksir, int k) {
@@ -85,13 +84,12 @@ public class Regresi {
                 }
             }
         }
-        scanner.close();
     }
 
     private void makeTabNormal(int l) {
         //Menghasilkan matriks Normal Equation utk regresi berganda, lebih detailnya
         //bisa diliat di spek tubes
-        this.tabNormal = new Matriks(l + 1, l + 2);
+        this.tabNormal = new MAugmented(l + 1, l + 2);
 
         for (int i = this.tabNormal.getIdxMin(); i < this.tabNormal.getnBrs(); i++) {
             for ( int j = this.tabNormal.getIdxMin(); j < this.tabNormal.getnKol(); j++) {
@@ -106,6 +104,8 @@ public class Regresi {
                 }
             }
         }
+        this.tabNormal.makeMatKoef();
+        this.tabNormal.makeMatKoef();
     }
 
     private float[] getArrayB() {

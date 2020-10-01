@@ -13,6 +13,7 @@ public class Main {
         System.out.println(augmentedgj);
         System.out.println(augmentedgj.kalimatSolusi());
 
+        Regresi a = new Regresi();
         // MAugmented augmented1 = new MAugmented(new float[][] {  {1, -1, 2, -1, -1},
         //                                                         {2, 1, -2, -2, -2},
         //                                                         {-1, 2, -4, 1, 1},

@@ -2,6 +2,12 @@ public class MAugmented extends Matriks{
     public Matriks MatKoef, MatVal;
 
 //  KONSTRUKTOR
+    public MAugmented (int i, int j) {
+        super(i, j);
+        makeMatKoef();
+        makeMatVal();
+    }
+    
     public MAugmented (float[][] mat) {
         super(mat);
         makeMatKoef();
@@ -167,12 +173,12 @@ public class MAugmented extends Matriks{
         }
     }
 
-    private void makeMatKoef (){
+    public void makeMatKoef (){
         this.MatKoef = new Matriks(super.getnBrs() ,super.getnKol()-1);
         setMatKoef();
     }
 
-    private void makeMatVal (){
+    public void makeMatVal (){
         this.MatVal = new Matriks(super.getnBrs(), 1);
         setMatVal();
     }
