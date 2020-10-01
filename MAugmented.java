@@ -7,7 +7,7 @@ public class MAugmented extends Matriks{
         makeMatKoef();
         makeMatKoef();
     }
-    
+
     public MAugmented (int i, int j) {
         super(i, j);
         makeMatKoef();
