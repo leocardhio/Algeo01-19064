@@ -26,6 +26,104 @@ public class MAugmented extends Matriks{
         makeMatVal();
     }
 
+    public String kalimatSolusi() {
+        if (isInconsistent()) {
+            return "Tidak ada solusi\n";
+        }
+        else if (nBrsEff() == MatKoef.getnKol()) {
+            StringBuilder kalimat = new StringBuilder();
+            for (int j = MatKoef.getIdxMin(); j < MatKoef.getnKol(); j++) {
+                kalimat.append(String.format("x%d = %.2f\n", j + 1, MatVal.get(j, 0)));
+            }
+
+            return kalimat.toString();
+        }
+        else {
+            StringBuilder kalimat = new StringBuilder();
+            for (int i = MatKoef.getIdxMin(); i < nBrsEff(); i++) {
+                kalimat.append(String.format("x%d = %.2f", i + 1, MatVal.get(i, 0)));
+                
+                for (int j = nBrsEff(); j < MatKoef.getnKol(); j++) {
+                    if (Math.abs(MatKoef.get(i, j)) > 0.0000001) {
+                        String tanda = (MatKoef.get(i, j) > 0) ? "-" : "+";
+                        kalimat.append(String.format(" %s %.2fx%d", tanda, Math.abs(MatKoef.get(i, j)), j + 1));
+                    }
+                }
+
+                kalimat.append("\n");
+            }
+
+            for (int j = nBrsEff(); j < MatKoef.getnKol(); j++) {
+                kalimat.append(String.format("x%d", j + 1));
+                if (j != MatKoef.getnKol() - 1) {
+                    kalimat.append(", ");
+                }
+            }
+            kalimat.append(" bilangan riil\n");
+
+            return kalimat.toString();
+        }
+    }
+
+    public void makeMatKoef (){
+        this.MatKoef = new Matriks(super.getnBrs() ,super.getnKol()-1);
+        setMatKoef();
+    }
+
+    public void makeMatVal (){
+        this.MatVal = new Matriks(super.getnBrs(), 1);
+        setMatVal();
+    }
+
+    //  SET
+    private void setMatKoef (){
+        for (int i=0; i<this.MatKoef.getnBrs(); i++){
+            for (int j=0; j<this.MatKoef.getnKol(); j++){
+                this.MatKoef.set(i, j, super.get(i,j));
+            }
+        }
+    }
+
+    private void setMatVal (){
+        for (int i=0; i<this.MatVal.getnBrs(); i++){
+            this.MatVal.set(i, 0, super.get(i,super.getnKol()-1));
+        }
+    }
+
+    private boolean isBarisKoefNol(int i) {
+        for (int j = MatKoef.getIdxMin(); j < MatKoef.getnKol(); j++) {
+            if (MatKoef.get(i, j) != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isInconsistent() {
+        for (int i = MatKoef.getIdxMin(); i < MatKoef.getnBrs(); i++) {
+            if (isBarisKoefNol(i) && MatVal.get(i, 0) != 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int nBrsEff() {
+        int nEff = MatKoef.getnBrs();
+
+        for (int i = MatKoef.getIdxMin(); i < MatKoef.getnBrs(); i++) {
+            if (isBarisKoefNol(i) && MatVal.get(i, 0) == 0) {
+                nEff -= 1;
+            }
+        }
+
+        return nEff;
+    }
+
+    // SOAL/TUGAS
+
     public MAugmented inversSPL() {
         //hasil.tulisMatriks -> inversKoef, hasil.kalimatSolusi -> x1,x2,x3 dll
         Matriks inversKoef = this.MatKoef.invers();
@@ -36,8 +134,6 @@ public class MAugmented extends Matriks{
 
         return hasil;
     }
-
-
 
     public MAugmented gauss() {
         //jadiin me-return new Matriks mirip kayak invers(), coba testcase
@@ -146,129 +242,33 @@ public class MAugmented extends Matriks{
         return gaussMat;
     }
 
-    public String kalimatSolusi() {
-        if (isInconsistent()) {
-            return "Tidak ada solusi\n";
-        }
-        else if (nBrsEff() == MatKoef.getnKol()) {
-            StringBuilder kalimat = new StringBuilder();
-            for (int j = MatKoef.getIdxMin(); j < MatKoef.getnKol(); j++) {
-                kalimat.append(String.format("x%d = %.2f\n", j + 1, MatVal.get(j, 0)));
-            }
-
-            return kalimat.toString();
-        }
-        else {
-            StringBuilder kalimat = new StringBuilder();
-            for (int i = MatKoef.getIdxMin(); i < nBrsEff(); i++) {
-                kalimat.append(String.format("x%d = %.2f", i + 1, MatVal.get(i, 0)));
-                
-                for (int j = nBrsEff(); j < MatKoef.getnKol(); j++) {
-                    if (Math.abs(MatKoef.get(i, j)) > 0.0000001) {
-                        String tanda = (MatKoef.get(i, j) > 0) ? "-" : "+";
-                        kalimat.append(String.format(" %s %.2fx%d", tanda, Math.abs(MatKoef.get(i, j)), j + 1));
-                    }
-                }
-
-                kalimat.append("\n");
-            }
-
-            for (int j = nBrsEff(); j < MatKoef.getnKol(); j++) {
-                kalimat.append(String.format("x%d", j + 1));
-                if (j != MatKoef.getnKol() - 1) {
-                    kalimat.append(", ");
-                }
-            }
-            kalimat.append(" bilangan riil\n");
-
-            return kalimat.toString();
-        }
-    }
-
-    public void makeMatKoef (){
-        this.MatKoef = new Matriks(super.getnBrs() ,super.getnKol()-1);
-        setMatKoef();
-    }
-
-    public void makeMatVal (){
-        this.MatVal = new Matriks(super.getnBrs(), 1);
-        setMatVal();
-    }
-
-    //  SET
-    private void setMatKoef (){
-        for (int i=0; i<this.MatKoef.getnBrs(); i++){
-            for (int j=0; j<this.MatKoef.getnKol(); j++){
-                this.MatKoef.set(i, j, super.get(i,j));
-            }
-        }
-    }
-
-    private void setMatVal (){
-        for (int i=0; i<this.MatVal.getnBrs(); i++){
-            this.MatVal.set(i, 0, super.get(i,super.getnKol()-1));
-        }
-    }
-
-    private boolean isBarisKoefNol(int i) {
-        for (int j = MatKoef.getIdxMin(); j < MatKoef.getnKol(); j++) {
-            if (MatKoef.get(i, j) != 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public boolean isInconsistent() {
-        for (int i = MatKoef.getIdxMin(); i < MatKoef.getnBrs(); i++) {
-            if (isBarisKoefNol(i) && MatVal.get(i, 0) != 0) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private int nBrsEff() {
-        int nEff = MatKoef.getnBrs();
-
-        for (int i = MatKoef.getIdxMin(); i < MatKoef.getnBrs(); i++) {
-            if (isBarisKoefNol(i) && MatVal.get(i, 0) == 0) {
-                nEff -= 1;
-            }
-        }
-
-        return nEff;
-    }
-
-    // SOAL/TUGAS
-
-    public Matriks cramer() {
+    public MAugmented cramer() {
         int i, j, k;
         float detj, det;
+        Matriks koef = this.MatKoef;
+        Matriks val = this.MatVal;
         
-        det = MatKoef.determinan();
+        det = koef.determinan();
         if (det == 0) {
             System.out.println("Matriks ini tidak memiliki solusi tunggal, me-return matriks ini.");
             return this;
         }
         System.out.println("det: " + det);
 
-        for (k = MatKoef.getIdxMin(); k < MatKoef.getnKol(); k++) {
-            for (i = MatKoef.getIdxMin(); i < MatKoef.getnBrs(); i++) {
-                for (j = MatKoef.getIdxMin(); j < MatKoef.getnKol(); j++) {
+        for (k = koef.getIdxMin(); k < koef.getnKol(); k++) {
+            for (i = koef.getIdxMin(); i < koef.getnBrs(); i++) {
+                for (j = koef.getIdxMin(); j < koef.getnKol(); j++) {
                     if (j == k) {
-                        MatKoef.set(i, k, get(i, MatKoef.getnKol()));
+                        koef.set(i, k, get(i, koef.getnKol()));
                     } else {
-                        MatKoef.set(i, j, get(i, j));
+                        koef.set(i, j, get(i, j));
                     }
                 }
             }
-            System.out.println(MatKoef);
-            detj = MatKoef.determinan();
+            System.out.println(koef);
+            detj = koef.determinan();
             System.out.println("detj: " + detj);
-            MatVal.set(k, 0, detj/det);
+            val.set(k, 0, detj/det);
         }
 
         return MatVal;

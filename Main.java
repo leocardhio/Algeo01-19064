@@ -22,11 +22,11 @@ public class Main {
         System.out.println(augmented.inversSPL().kalimatSolusi());
         
         
-        // MAugmented augmented2 = new MAugmented (augmented);
-        // System.out.println(augmented2.MatKoef);
-        // System.out.println(augmented2.MatVal);
-        // Matriks Mgauss = augmented.gauss();
-        // System.out.println(Mgauss);
+        MAugmented augmented2 = new MAugmented (augmented);
+        System.out.println(augmented2.MatKoef);
+        System.out.println(augmented2.MatVal);
+        Matriks Mgauss = augmented.gauss();
+        System.out.println(Mgauss);
         //System.out.println(M);
         //System.out.println("determinan: " + M.determinan());
 
@@ -47,10 +47,10 @@ public class Main {
         //                                                         {3, 0, 0, -3, -3}});
 
         // System.out.println(augmented1.gaussjor());
-    
-        // int choose,m,n;
-        // boolean isOn,isInputValid,willADV;
-        // Matriks MainM;
+/*
+        int choose,m,n;
+        boolean isOn,isInputValid,willADV;
+        Matriks MainM;
 
         // isOn=true;
         // System.out.println(" ==========================================================================");
@@ -128,12 +128,25 @@ public class Main {
                 
         //     } else if (choose==5){
 
-        //     } else if (choose==6){
-        //         System.out.println("Keluar dari program.");
-        //         isOn=false;
-        //     } else {
-        //         System.out.println("Masukan invalid!");
-        //     }
-        // }
+            } else if (choose==6){
+                System.out.println("Keluar dari program.");
+                isOn=false;
+            } else {
+                System.out.println("Masukan invalid!");
+            }
+        }
+*/
+
+        // augmented.toString();
+        // Regresi reg = new Regresi();
+        // float [][] M3 = {{1, 2, 3},
+        //                 {2, 5, 3},
+        //                 {1, 0, 8}};
+        // float [][] I = new float[3][3];
+        // I = M.invers(3,3,M3);
+        // System.out.println("");
+        // M.tulismatriks(3,3,M3);
+        // System.out.println("");
+        // M.tulismatriks(3,3,I);
     }
 }
