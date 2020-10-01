@@ -7,44 +7,59 @@ public class Regresi {
     private MAugmented solusiTabNormal;
     private Matriks tabTaksir; //tabel nilai yang akan di taksir
 
-    public Regresi() {
+
+    public Regresi(boolean inputFile) {
         //input k dan n
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan k (banyaknya variabel x): ");
-        int k = scanner.nextInt();
+        if (inputFile) {
+            System.out.println("Membuat TabEQ...");
 
-        int n;
-        do {
-            System.out.print("Masukkan n (banyaknya persamaan): ");
-            n = scanner.nextInt();
-            if (n <= k + 1) {
-                System.out.println("n harus lebih besar dari k + 1");
-            }
-        } while (n <= k + 1);
+            tabEQ = new Matriks();
+            System.out.println(tabEQ);
+            makeTabNormal(tabEQ.getnBrs() - 1);
 
-        makeTabEQ(n, k);
-        makeTabNormal(k);
+            System.out.println("Membuat tabTaksir...");
+            
+            Matriks temp = new Matriks();
+            makeTabTaksirFile(temp);
+            this.solusiTabNormal = this.tabNormal.gaussjor();
+            taksirNilai();
+        }
+        else {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Masukkan k (banyaknya variabel x): ");
+            int k = scanner.nextInt();
 
-        System.out.print("Masukkan banyak persamaan yang ingin ditaksir: ");
-        int nTaksir = scanner.nextInt();
+            int n;
+            do {
+                System.out.print("Masukkan n (banyaknya persamaan): ");
+                n = scanner.nextInt();
+                if (n <= k + 1) {
+                    System.out.println("n harus lebih besar dari k + 1");
+                }
+            } while (n <= k + 1);
 
-        makeTabTaksir(nTaksir, k);
-        this.solusiTabNormal = this.tabNormal.gaussjor();
-        taksirNilai();
-        // System.out.println(tabEQ);;
-        // System.out.println();
-        // System.out.println(tabNormal);;
-        // System.out.println();
-        // System.out.println("tabel B:");
-        // this.tabNormal = this.tabNormal.gaussjor();
-        // System.out.println(tabNormal);;
-        // System.out.println("konstanta B:");
-        // System.out.println(Arrays.toString(getArrayB()));
-        // System.out.println();
-        // System.out.println("taksiran:");
-        // taksirNilai();
-        // System.out.println(taksiranToString());
-        scanner.close();
+            makeTabEQ(n, k);
+            makeTabNormal(k);
+
+            System.out.print("Masukkan banyak persamaan yang ingin ditaksir: ");
+            int nTaksir = scanner.nextInt();
+
+            makeTabTaksir(nTaksir, k);
+            this.solusiTabNormal = this.tabNormal.gaussjor();
+            taksirNilai();
+        }
+    }
+
+    public Matriks getTabEQ() {
+        return this.tabEQ;
+    }
+
+    public MAugmented getSolusiTabNormal() {
+        return this.solusiTabNormal;
+    }
+
+    public Matriks getTabTaksir() {
+        return this.tabTaksir;
     }
 
     public MAugmented getTabNormal() {
@@ -118,6 +133,25 @@ public class Regresi {
                 else {
                     System.out.printf("x[%d][%d]: ", i + 1, j + 1);
                     this.tabTaksir.set(i, j, scanner.nextFloat());
+                }
+            }
+        }
+    }
+
+    private void makeTabTaksirFile(Matriks temp) {
+        //Membuat tabel yang tiap barisnya x1, x2,...,xn untuk persamaan yang ingin
+        //ditaksir, kolom terakhir berisi nilai taksirannya, awalnya 0, untuk mengisi
+        //taksirannya run taksirNilai()
+        Scanner scanner = new Scanner(System.in);
+        this.tabTaksir = new Matriks(temp.getnBrs(), temp.getnKol() + 1);
+
+        for (int i = this.tabTaksir.getIdxMin(); i < this.tabTaksir.getnBrs(); i++) {
+            for (int j = this.tabTaksir.getIdxMin(); j < this.tabTaksir.getnKol(); j++) {
+                if (j == this.tabTaksir.getnKol() - 1) {
+                    this.tabTaksir.set(i, j, 0);
+                }
+                else {
+                    this.tabTaksir.set(i, j, temp.get(i, j));
                 }
             }
         }

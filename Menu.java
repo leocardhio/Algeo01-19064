@@ -1,10 +1,11 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Menu {
     public boolean isOn;
     
     public Menu() {
-        runCramer();
+        menuRegresi();
         // isOn = true;
         // System.out.print(MenuStrings.menuawal());
         // Scanner scanner = new Scanner(System.in);
@@ -29,7 +30,7 @@ public class Menu {
         //         menuInvers();
         //         break;
         //     case 4:
-        //         menuInterp();
+        //         Interpolasi a = new Interpolasi();
         //         break;
         //     case 5:
         //         menuRegresi();
@@ -40,36 +41,36 @@ public class Menu {
         // }
     }
 
-    // private void menuSPL() {
-    //     System.out.println(MenuStrings.strMenuSPL());
-    //     Scanner scanner = new Scanner(System.in);
+    private void menuSPL() {
+        System.out.println(MenuStrings.strMenuSPL());
+        Scanner scanner = new Scanner(System.in);
 
-    //     int choice;
-    //     do {
-    //         choice = scanner.nextInt();
-    //         if (choice < 1 || choice > 5) {
-    //             System.out.print("Silahkan input angka yang valid (1-5)\nPilihan: ");
-    //         }
-    //     } while (choice < 1 || choice > 5);
-    //     System.out.println();
+        int choice;
+        do {
+            choice = scanner.nextInt();
+            if (choice < 1 || choice > 5) {
+                System.out.print("Silahkan input angka yang valid (1-5)\nPilihan: ");
+            }
+        } while (choice < 1 || choice > 5);
+        System.out.println();
 
-    //     switch(choice) {
-    //         case 1:
-    //             runGauss();
-    //             break;
-    //         case 2:
-    //             runGaussJor();
-    //             break;
-    //         case 3:
-    //             runInversSPL();
-    //             break;
-    //         case 4:
-    //             runCramer();
-    //             break;
-    //         case 5:
-    //             break;
-    //     }
-    // }
+        switch(choice) {
+            case 1:
+                runGauss();
+                break;
+            case 2:
+                runGaussJor();
+                break;
+            case 3:
+                runInversSPL();
+                break;
+            case 4:
+                runCramer();
+                break;
+            case 5:
+                break;
+        }
+    }
 
     private void runGauss() {
         System.out.printf("Pilih metode pembuatan matriks Gauss: \n1. Membaca dari keyboard\n2. Import dari file (.txt)\n3. Main Menu\nPilihan: ");
@@ -296,6 +297,188 @@ public class Menu {
             MakeFile saving = new MakeFile(result.toString());
         }
 
+    }
+
+    private void menuDet() {
+        System.out.print("Pilih Metode Determinan:\n1.OBE\n2.Ekspansi Kofaktor\n3. Main menu\nPilihan : ");
+        Scanner scanner = new Scanner(System.in);
+
+        int choice;
+        do {
+            choice = scanner.nextInt();
+            if (choice < 1 || choice > 3) {
+                System.out.print("Silahkan input angka yang valid (1-3)\nPilihan: ");
+            }
+        } while (choice < 1 || choice > 3);
+        System.out.println();
+        if (choice == 3) {
+            return;
+        }
+        
+        System.out.printf("Pilih metode pembuatan matriks: \n1. Membaca dari keyboard\n2. Import dari file (.txt)\n3. Main Menu\nPilihan: ");
+        Matriks mat;
+        int genChoice;
+        do {
+            genChoice = scanner.nextInt();
+            if (genChoice < 1 || genChoice > 3) {
+                System.out.print("Silahkan input angka yang valid (1-3)\nPilihan: ");
+            }
+        } while (genChoice < 1 || genChoice > 3);
+
+        if (genChoice == 3) {
+            return;
+        }
+        else if (genChoice == 2) {
+            mat = new Matriks();
+        }
+        else {
+            System.out.print("Dimensi matriks : ");
+            int n = scanner.nextInt();
+
+            mat = new Matriks(n);
+            mat.bacaMatriks();
+            System.out.println();
+        }
+
+        float determinan;
+        if (choice == 1) {
+            determinan = mat.detred();
+        }
+        else {
+            determinan = mat.determinan();
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append(mat);
+        result.append("determinan : " + determinan);
+
+        System.out.println(result.toString());
+        System.out.println("\nSave hasil ke file?\n1.Ya\n2.Tidak");
+        int save;
+        do {
+            save = scanner.nextInt();
+            if (save != 1 && save != 2) {
+                System.out.println("Input 1 (Ya) atau 2 (Tidak)");
+            }
+        } while (save != 1 && save != 2);
+        if (save == 1) {
+            MakeFile saving = new MakeFile(result.toString());
+        }
+    }
+
+    private void menuInvers() {
+        System.out.print("Pilih Metode Invers:\n1.OBE\n2.Adjoin\n3. Main menu\nPilihan : ");
+        Scanner scanner = new Scanner(System.in);
+
+        int choice;
+        do {
+            choice = scanner.nextInt();
+            if (choice < 1 || choice > 3) {
+                System.out.print("Silahkan input angka yang valid (1-3)\nPilihan: ");
+            }
+        } while (choice < 1 || choice > 3);
+        System.out.println();
+        if (choice == 3) {
+            return;
+        }
+        
+        System.out.printf("Pilih metode pembuatan matriks : \n1. Membaca dari keyboard\n2. Import dari file (.txt)\n3. Main Menu\nPilihan: ");
+        Matriks mat;
+        int genChoice;
+        do {
+            genChoice = scanner.nextInt();
+            if (genChoice < 1 || genChoice > 3) {
+                System.out.print("Silahkan input angka yang valid (1-3)\nPilihan: ");
+            }
+        } while (genChoice < 1 || genChoice > 3);
+
+        if (genChoice == 3) {
+            return;
+        }
+        else if (genChoice == 2) {
+            mat = new Matriks();
+        }
+        else {
+            System.out.print("Dimensi matriks : ");
+            int n = scanner.nextInt();
+
+            mat = new Matriks(n);
+            mat.bacaMatriks();
+            System.out.println();
+        }
+
+        Matriks inversMat;
+        if (choice == 1) {
+            inversMat = mat.inversOBE();
+        }
+        else {
+            inversMat = mat.invers();
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append(mat);
+        result.append("invers:\n");
+        result.append(inversMat);
+        
+        System.out.println(result.toString());
+        System.out.println("\nSave hasil ke file?\n1.Ya\n2.Tidak");
+        int save;
+        do {
+            save = scanner.nextInt();
+            if (save != 1 && save != 2) {
+                System.out.println("Input 1 (Ya) atau 2 (Tidak)");
+            }
+        } while (save != 1 && save != 2);
+        if (save == 1) {
+            MakeFile saving = new MakeFile(result.toString());
+        }
+    }
+
+    private void menuRegresi() {
+        Regresi reg;
+        Scanner scanner = new Scanner(System.in);
+        System.out.printf("Pilih metode pembuatan matriks : \n1. Membaca dari keyboard\n2. Import dari file (.txt)\n3. Main Menu\nPilihan: ");
+        int genChoice;
+        do {
+            genChoice = scanner.nextInt();
+            if (genChoice < 1 || genChoice > 3) {
+                System.out.print("Silahkan input angka yang valid (1-3)\nPilihan: ");
+            }
+        } while (genChoice < 1 || genChoice > 3);
+        if (genChoice == 3) {
+            return;
+        }
+        else if (genChoice == 1) {
+            reg = new Regresi(false);
+        }
+        else {
+            reg = new Regresi(true);
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append("matriks persamaan awal:\n");
+        result.append(reg.getTabEQ());
+        result.append("matriks persamaan normal:\n");
+        result.append(reg.getTabNormal());
+        result.append("solusi persamaan normal:\n");
+        result.append(reg.getSolusiTabNormal());
+        result.append("konstanta B:\n");
+        result.append(Arrays.toString(reg.getArrayB()));
+        result.append("\nhasil taksiran:\n");
+        result.append(reg.getTabTaksir());
+
+        System.out.println(result.toString());
+        System.out.println("\nSave hasil ke file?\n1.Ya\n2.Tidak");
+        int save;
+        do {
+            save = scanner.nextInt();
+            if (save != 1 && save != 2) {
+                System.out.println("Input 1 (Ya) atau 2 (Tidak)");
+            }
+        } while (save != 1 && save != 2);
+        if (save == 1) {
+            MakeFile saving = new MakeFile(result.toString());
+        }
     }
 
 

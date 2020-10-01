@@ -4,6 +4,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Menu a = new Menu();
+        // Regresi a = new Regresi(false);
         // Scanner scanner = new Scanner (System.in);
 
         // Matriks a = new Matriks(new float[][] {{1, 3, 3}, {3, 4, 5}});

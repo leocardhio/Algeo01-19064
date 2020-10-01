@@ -390,8 +390,7 @@ public class Matriks {
             throw new java.lang.RuntimeException("Matriks tidak persegi.");
         }
         else if (determinan == 0) {
-            System.out.println("Matriks ini tidak punya invers, me-return matriks ini.");
-            return this;
+            throw new java.lang.RuntimeException("Tidak ada invers (determinan = 0).");
         }
 
         Matriks cofactor = new Matriks(nBrs);
@@ -418,8 +417,7 @@ public class Matriks {
 
         float determinan = this.determinan();
         if (determinan == 0) {
-            System.out.println("Matriks ini tidak punya invers, me-return matriks ini.");
-            return this;
+            throw new java.lang.RuntimeException("Tidak ada invers (determinan = 0).");
         }
 
         Matriks gaussMat = new Matriks(nBrs, nKol);
