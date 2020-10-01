@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        // Menu a = new Menu();
+        Menu a = new Menu();
         // Scanner scanner = new Scanner (System.in);
 
         // Matriks a = new Matriks(new float[][] {{1, 3, 3}, {3, 4, 5}});
@@ -18,8 +18,12 @@ public class Main {
                                                         {1, 2, 4, 2},
                                                         {1, 3, 9, 3} }));
 
-        // System.out.println(augmented.gaussjor());
-        System.out.println(augmented.cramer().kalimatSolusi());
+        System.out.println(augmented.gaussjor());
+        System.out.println(augmented);
+        MAugmented augmentedcr = augmented.cramer();
+        System.out.println(augmentedcr.MatKoef);
+        System.out.println(augmentedcr.MatVal);
+        System.out.println(augmentedcr.kalimatSolusi());
         
         
         MAugmented augmented2 = new MAugmented (augmented);

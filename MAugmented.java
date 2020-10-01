@@ -129,7 +129,7 @@ public class MAugmented extends Matriks{
         Matriks inversKoef = this.MatKoef.invers();
         MAugmented hasil = new MAugmented(inversKoef);
         
-        hasil.MatKoef = inversKoef.gaussjorM();
+        hasil.MatKoef = this.gaussjor().MatKoef;
         hasil.MatVal = inversKoef.kaliMatriks(this.MatVal);
 
         return hasil;
@@ -245,7 +245,8 @@ public class MAugmented extends Matriks{
     public MAugmented cramer() {
         int i, j, k;
         float detj, det;
-        Matriks koef = this.MatKoef;
+        Matriks gaussjorKoef = this.gaussjor().MatKoef;
+        Matriks koef = new Matriks(this.MatKoef);
         Matriks val = this.MatVal;
 
         det = koef.determinan();
@@ -268,6 +269,7 @@ public class MAugmented extends Matriks{
             val.set(k, 0, detj/det);
         }
         MAugmented hasil = new MAugmented(koef);
+        hasil.MatKoef = gaussjorKoef;
         hasil.MatVal = val;
         return hasil;
     }

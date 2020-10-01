@@ -4,7 +4,7 @@ public class Menu {
     public boolean isOn;
     
     public Menu() {
-        runInversSPL();
+        runCramer();
         // isOn = true;
         // System.out.print(MenuStrings.menuawal());
         // Scanner scanner = new Scanner(System.in);
@@ -224,6 +224,64 @@ public class Menu {
         result.append(mat.MatVal);
         result.append("\nvariabel x:\n");
         result.append(matInversSPL.kalimatSolusi());
+
+        System.out.println(result.toString());
+        System.out.println("\nSave hasil ke file?\n1.Ya\n2.Tidak");
+        int save;
+        do {
+            save = scanner.nextInt();
+            if (save != 1 && save != 2) {
+                System.out.println("Input 1 (Ya) atau 2 (Tidak)");
+            }
+        } while (save != 1 && save != 2);
+        if (save == 1) {
+            MakeFile saving = new MakeFile(result.toString());
+        }
+
+    }
+
+    private void runCramer() {
+        //Membuat MAugmented mat
+        //DARI LINE INI HAMPIR SAMA UTK SEMUA runSPL
+        System.out.printf("Pilih metode pembuatan matriks (Cramer): \n1. Membaca dari keyboard\n2. Import dari file (.txt)\n3. Main Menu\nPilihan: ");
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        MAugmented mat;
+        do {
+            choice = scanner.nextInt();
+            if (choice < 1 || choice > 3) {
+                System.out.print("Silahkan input angka yang valid (1-3)\nPilihan: ");
+            }
+        } while (choice < 1 || choice > 3);
+
+        if (choice == 3) {
+            return;
+        }
+        else if (choice == 2) {
+            Matriks matTemp = new Matriks();
+            mat = new MAugmented(matTemp);
+        }
+        else {
+            System.out.print("Jumlah baris : ");
+            int i = scanner.nextInt();
+            System.out.print("Jumlah kolom : ");
+            int j = scanner.nextInt();
+
+            Matriks matTemp = new Matriks(i, j);
+            matTemp.bacaMatriksSPL();
+
+            mat = new MAugmented(matTemp);
+        }
+        //SAMPAI LINE INI HAMPIR SAMA UTK SEMUA runSPL
+        MAugmented matCramer = mat.cramer();
+        StringBuilder result = new StringBuilder();
+
+        result.append("matriks:\n");
+        result.append(mat);
+        result.append("\nSubstitusi kolom terakhir di MatKoef:\n");
+        result.append(matCramer);
+        result.append("\nvariabel x:\n");
+        result.append(matCramer.kalimatSolusi());
 
         System.out.println(result.toString());
         System.out.println("\nSave hasil ke file?\n1.Ya\n2.Tidak");
