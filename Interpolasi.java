@@ -48,7 +48,7 @@ public class Interpolasi {
 
         isFirst=true;
         output2="";
-        output2+="P(x)=";
+        output2+="P(x) = ";
         for (int i=0;i<n+1;i++){
             if (isFirst){
                 if (i==0 && arr[i]!=0){
@@ -71,9 +71,9 @@ public class Interpolasi {
                 }
             } else if (arr[i]>0){
                 if (i==1){
-                    output2+="+"+String.valueOf(arr[i])+"x";
+                    output2+=" + "+String.valueOf(arr[i])+"x";
                 } else {
-                    output2+="+"+String.valueOf(arr[i])+"x^"+String.valueOf(i);
+                    output2+=" + "+String.valueOf(arr[i])+"x^"+String.valueOf(i);
                 }
             } else if (arr[i]<0) {
                 if (i==1){
