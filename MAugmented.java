@@ -178,8 +178,14 @@ public class MAugmented extends Matriks{
                         div = gaussMat.get(i, i+skip);
                     }
                     else {
+                        if (i -  1 >= 0) {
+                            if (gaussMat.get(i - 1, j) == 0) {
+                                skip += 1;
+                            }
+                        } else if (gaussMat.get(i, j) == 0) {
+                            skip += 1;
+                        }
                         j += 1;
-                        skip += 1;
                     }
                 }
             }
