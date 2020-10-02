@@ -71,9 +71,9 @@ public class Interpolasi {
                 }
             } else if (arr[i]>0){
                 if (i==1){
-                    output2+="+"+String.valueOf(arr[i])+"x";
+                    output2+=" + "+String.valueOf(arr[i])+"x";
                 } else {
-                    output2+="+"+String.valueOf(arr[i])+"x^"+String.valueOf(i);
+                    output2+=" + "+String.valueOf(arr[i])+"x^"+String.valueOf(i);
                 }
             } else if (arr[i]<0) {
                 if (i==1){
