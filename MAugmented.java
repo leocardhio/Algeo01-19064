@@ -217,7 +217,7 @@ public class MAugmented extends Matriks{
                     }
                 }
                 if (i < (nBrs - 1)) {
-                    for (a = i + 1; a < nBrs; ++a) {
+                    for (a = i + 1; a < nBrs && (i + skip) < nKol; ++a) {
                         mul = gaussMat.get(a, i+skip) / gaussMat.get(i, i+skip);
                         for (b = 0; b < nKol; ++b) {
                             gaussMat.set(a, b, gaussMat.get(a, b) - (mul*gaussMat.get(i, b)));
