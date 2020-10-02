@@ -464,7 +464,7 @@ public class Menu {
         result.append("\nkonstanta B:\n");
         result.append(Arrays.toString(reg.getArrayB()));
         result.append("\n\nhasil taksiran:\n");
-        result.append(reg.getTabTaksir());
+        result.append(reg.taksiranToString());
 
         System.out.println(result.toString());
         System.out.println("\nSave hasil ke file?\n1.Ya\n2.Tidak");
